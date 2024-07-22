@@ -43,6 +43,7 @@ public class ThirdPersonController : MonoBehaviour
     bool inputSprint;
 
     Animator animator;
+    int animState = 0;
     CharacterController cc;
 
     Transform cameraT;
@@ -110,6 +111,8 @@ public class ThirdPersonController : MonoBehaviour
             isSprinting = cc.velocity.magnitude > minimumSpeed && inputSprint;
             animator.SetBool("sprint", isSprinting);
 
+            //AnimState
+            animator.SetInteger("AnimState", animState);
         }
 
         // Jump animation
@@ -125,6 +128,8 @@ public class ThirdPersonController : MonoBehaviour
         }
 
         HeadHittingDetect();
+
+        HandleWeaponSelect();
 
     }
 
@@ -226,6 +231,14 @@ public class ThirdPersonController : MonoBehaviour
         {
             jumpElapsedTime = 0;
             isJumping = false;
+        }
+    }
+
+    void HandleWeaponSelect()
+    {
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            animState = animState == 1 ? 0 : 1;
         }
     }
 
