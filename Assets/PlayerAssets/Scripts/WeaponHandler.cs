@@ -5,20 +5,22 @@ using UnityEngine;
 public class WeaponHandler : MonoBehaviour
 {
     public GameObject weapon;
-    
+
     int weaponState = 0;
 
     [SerializeField] Transform handT;
+
+    GameObject weaponSpawned;
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             EquipWeapon();
         }
@@ -26,8 +28,22 @@ public class WeaponHandler : MonoBehaviour
 
     void EquipWeapon()
     {
-        weaponState = 1;
-        Transform weaponT = Instantiate(weapon, handT.position, handT.rotation * weapon.transform.rotation).transform;
-        weaponT.parent = handT;
+
+    }
+
+    void SpawnWeapon()
+    {
+        if (weaponSpawned == null)
+        {
+            weaponState = 1;
+            weaponSpawned = Instantiate(weapon, handT.position, handT.rotation * weapon.transform.rotation);
+            weaponSpawned.transform.parent = handT;
+        }
+
+    }
+
+    void DeSpawnWeapon()
+    {
+        Destroy(weaponSpawned);
     }
 }
