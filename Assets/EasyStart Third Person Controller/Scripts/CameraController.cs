@@ -66,8 +66,8 @@ public class CameraController : MonoBehaviour
                 return;
             
         // Calculate new position
-        mouseX += Input.GetAxis("Mouse X") * sensitivity;
-        mouseY += Input.GetAxis("Mouse Y") * sensitivity;
+        mouseX += Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
+        mouseY += Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
         // Apply camera limts
         mouseY = Mathf.Clamp(mouseY, cameraLimit.x, cameraLimit.y);
 
