@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class WeaponHandler : MonoBehaviour
 {
+    private Animator animator;
     public GameObject weapon;
 
     int weaponState = 0;
@@ -11,10 +12,16 @@ public class WeaponHandler : MonoBehaviour
     [SerializeField] Transform handT;
 
     GameObject weaponSpawned;
-    // Start is called before the first frame update
-    void Start()
-    {
 
+    bool holdingWeapon = false;
+
+    [Header("Attacking Stuff")]
+    public AnimationClip attackAnimation;
+    bool attacking = false;
+
+    void Awake()
+    {
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -22,13 +29,43 @@ public class WeaponHandler : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            EquipWeapon();
+            if (!holdingWeapon)
+            {
+                EquipWeapon();
+            }
+            else
+            {
+                UnEquipWeapon();
+            }
         }
+
+        if (Input.GetKeyDown(KeyCode.Mouse0) && holdingWeapon)
+        {
+            Attack();
+        }
+    }
+
+    void Attack()
+    {
+        attacking = true;
+        StartCoroutine(AttackCoroutine());
+    }
+
+    IEnumerator AttackCoroutine()
+    {
+        animator.SetTrigger("Attacking");
+        yield return new WaitForSeconds(attackAnimation.length);
+        attacking = false;
     }
 
     void EquipWeapon()
     {
+        holdingWeapon = true;
+    }
 
+    void UnEquipWeapon()
+    {
+        holdingWeapon = false;
     }
 
     void SpawnWeapon()
