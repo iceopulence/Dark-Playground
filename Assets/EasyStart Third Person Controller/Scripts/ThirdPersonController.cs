@@ -130,12 +130,6 @@ public class ThirdPersonController : MonoBehaviour
 
         HandleWeaponSelect();
 
-    }
-
-
-    // With the inputs and animations defined, FixedUpdate is responsible for applying movements and actions to the player
-    private void FixedUpdate()
-    {
 
         // Sprinting velocity boost or crounching desacelerate
         float velocityAdittion = 0;
@@ -214,7 +208,6 @@ public class ThirdPersonController : MonoBehaviour
         cc.Move(moviment);
 
     }
-
 
     //This function makes the character end his jump if he hits his head on something
     void HeadHittingDetect()

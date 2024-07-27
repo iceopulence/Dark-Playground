@@ -26,7 +26,7 @@ public class BuildSystem : MonoBehaviour
             floorBuild.position = new Vector3(Mathf.RoundToInt(hit.point.x) != 0 ? Mathf.RoundToInt(hit.point.x/gridSize) * gridSize : gridSize,
             (Mathf.RoundToInt(hit.point.y) != 0 ? Mathf.RoundToInt(hit.point.y/gridSize) * gridSize : 0),
             Mathf.RoundToInt(hit.point.z) != 0 ? Mathf.RoundToInt(hit.point.z / gridSize) * gridSize : gridSize);
-            print(hit.transform.gameObject.name);
+            // print(hit.transform.gameObject.name);
 
             if(floorBuild.gameObject.activeSelf == false)
             {
