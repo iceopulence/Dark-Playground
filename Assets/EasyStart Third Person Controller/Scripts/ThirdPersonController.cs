@@ -1,4 +1,3 @@
-﻿
 using UnityEditor.VersionControl;
 using UnityEngine;
 
@@ -47,7 +46,7 @@ public class ThirdPersonController : MonoBehaviour
     CharacterController cc;
 
     Transform cameraT;
-    Transform cameraParent;
+    // Transform cameraParent;
 
     public bool lockRotation = false;
 
@@ -62,7 +61,7 @@ public class ThirdPersonController : MonoBehaviour
             cameraT = Camera.main.transform;
         }
 
-        cameraParent = cameraT.parent;
+        // cameraParent = cameraT.parent;
 
         // Message informing the user that they forgot to add an animator
         if (animator == null)
@@ -200,7 +199,7 @@ public class ThirdPersonController : MonoBehaviour
         }
         else if (lockRotation)
         {
-            Quaternion rotation = Quaternion.Euler(0, cameraParent.eulerAngles.y, 0);
+            Quaternion rotation = Quaternion.Euler(0, cameraT.eulerAngles.y, 0);
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 0.15f);
         }
 
