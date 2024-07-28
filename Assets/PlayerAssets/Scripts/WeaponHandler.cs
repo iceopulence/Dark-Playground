@@ -19,6 +19,10 @@ public class WeaponHandler : MonoBehaviour
     public AnimationClip attackAnimation;
     bool attacking = false;
 
+    public float attackRange = 10f;
+    public float attackRadius = 10f;
+    [SerializeField] LayerMask attackableLayers;
+
     void Awake()
     {
         animator = GetComponent<Animator>();
@@ -54,6 +58,17 @@ public class WeaponHandler : MonoBehaviour
     IEnumerator AttackCoroutine()
     {
         animator.SetTrigger("Attacking");
+        
+        // Vector3 spherecastOrigin = transform.position + Vector3.up * originOffset;
+
+        //check if we hit anything
+        RaycastHit hit;
+        // if(Physics.SphereCast(spherecastOrigin, attackSize, transform.forward, out hit, attackRange, attackableLayer))
+        // {
+        //     Health attackedHealth = hit.transform.GetComponent<attackedHealth>();
+        //     attackedHealth.Damage(heldWeapon.damage);
+        // }
+
         yield return new WaitForSeconds(attackAnimation.length);
         attacking = false;
     }
@@ -76,7 +91,6 @@ public class WeaponHandler : MonoBehaviour
             weaponSpawned = Instantiate(weapon, handT.position, handT.rotation * weapon.transform.rotation);
             weaponSpawned.transform.parent = handT;
         }
-
     }
 
     void DeSpawnWeapon()
