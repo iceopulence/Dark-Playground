@@ -38,7 +38,7 @@ public class AudioEnvelopeSpeaking : MonoBehaviour
         }
 
         initialYPosition = targetTransform.position.y; // Set initial Y position at the start of analysis
-        audioSource.clip = clip;
+         audioSource.clip = clip;
         audioSource.Play();
         StartCoroutine(AnalyzeAudioCoroutine(clip.length, clip));
     }
