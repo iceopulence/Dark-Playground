@@ -45,8 +45,8 @@ public class Button3D : MonoBehaviour
     {
         offScreenPos = transform.position;
         originalScale = transform.localScale;
-        originalRotation = OnScreenT.eulerAngles;
-        originalPos = OnScreenT.position;
+        originalRotation = OnScreenT != null ? OnScreenT.eulerAngles : transform.eulerAngles;
+        originalPos = OnScreenT != null ? OnScreenT.position : transform.position;
 
         targetScale = originalScale * scaleModifier;
         targetRot = originalRotation + rotOffset;

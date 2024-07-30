@@ -21,7 +21,14 @@ public class MainMenuCameraController : MonoBehaviour
     public void SetTargetTransform(Transform newTarget)
     {
         targetPosition = newTarget.position + cameraOffset;
-        targetRotation = Quaternion.LookRotation(newTarget.position - transform.position);
+        targetRotation = newTarget.rotation;
+    }
+    
+    public void SetTargetTransform(Transform newTarget, float smoothTime)
+    {
+        targetPosition = newTarget.position + cameraOffset;
+        targetRotation = newTarget.rotation;
+        this.smoothTime = smoothTime;
     }
 
     public void SetTargetPosition(Vector3 newPosition)
@@ -32,5 +39,10 @@ public class MainMenuCameraController : MonoBehaviour
     public void SetTargetRotation(Vector3 forwardDirection)
     {
         targetRotation = Quaternion.LookRotation(forwardDirection);
+    }
+
+    public void SetSmoothTime(float smoothTime)
+    {
+        this.smoothTime = smoothTime;
     }
 }
