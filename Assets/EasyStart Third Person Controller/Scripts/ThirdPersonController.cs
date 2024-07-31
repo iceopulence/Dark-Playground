@@ -1,3 +1,4 @@
+
 using UnityEditor.VersionControl;
 using UnityEngine;
 
@@ -18,16 +19,10 @@ public class ThirdPersonController : MonoBehaviour
     [Tooltip("Speed ​​at which the character moves. It is not affected by gravity or jumping.")]
     public float velocity = 5f;
     [Tooltip("This value is added to the speed value while the character is sprinting.")]
-    public float sprintAdittion = 3.5f;
-    [Tooltip("The higher the value, the higher the character will jump.")]
-    public float jumpForce = 18f;
-    [Tooltip("Stay in the air. The higher the value, the longer the character floats before falling.")]
-    public float jumpTime = 0.85f;
+    public float sprintAddition = 3.5f;
     [Space]
     [Tooltip("Force that pulls the player down. Changing this value causes all movement, jumping and falling to be changed as well.")]
     public float gravity = 9.8f;
-
-    float jumpElapsedTime = 0;
 
     // Player states
     bool isJumping = false;
@@ -41,7 +36,17 @@ public class ThirdPersonController : MonoBehaviour
     bool inputCrouch;
     bool inputSprint;
 
+    //direction
+    float verticalDirection;
+    Vector3 horizontalDirection;
+    float directionY;
+    float directionX;
+    float directionZ;
+    Vector3 forward;
+    Vector3 right;
+
     Animator animator;
+    bool _hasAnimator;
     int animState = 0;
     CharacterController cc;
 
@@ -50,6 +55,32 @@ public class ThirdPersonController : MonoBehaviour
 
     public bool lockRotation = false;
 
+    [Header("Player Grounded")]
+    [Tooltip("If the character is grounded or not. Not part of the CharacterController built in grounded check")]
+    public bool Grounded = true;
+
+    [Tooltip("Useful for rough ground")]
+    public float GroundedOffset = -0.14f;
+
+    [Tooltip("The radius of the grounded check. Should match the radius of the CharacterController")]
+    public float GroundedRadius = 0.28f;
+
+    [Tooltip("What layers the character uses as ground")]
+    public LayerMask GroundLayers;
+
+    [Tooltip("The height the player can jump")]
+    public float JumpHeight = 1.2f;
+    [Tooltip("Time required to pass before being able to jump again. Set to 0f to instantly jump again")]
+    public float JumpTimeout = 0.50f;
+    [SerializeField] private float _jumpTimeoutDelta;
+    private float _fallTimeoutDelta;
+
+    [Tooltip("Time required to pass before entering the fall state. Useful for walking down stairs")]
+    public float FallTimeout = 0.15f;
+
+    private float _terminalVelocity = 53.0f;
+
+    public bool movementEnabled = true;
 
     void Awake()
     {
@@ -63,16 +94,168 @@ public class ThirdPersonController : MonoBehaviour
 
         // cameraParent = cameraT.parent;
 
+        _hasAnimator = animator != null;
+
         // Message informing the user that they forgot to add an animator
-        if (animator == null)
+        if (_hasAnimator)
             Debug.LogWarning("Hey buddy, you don't have the Animator component in your player. Without it, the animations won't work.");
+
+
     }
 
 
     // Update is only being used here to identify keys and trigger animations
     void Update()
     {
+        // print(Grounded + " grounded");
+        GatherInputs();
 
+        // Check if you pressed the crouch input key and change the player's state
+        if (inputCrouch)
+            isCrouching = !isCrouching;
+
+        HandleAnimations();
+        GroundedCheck();
+
+        // Handle can jump or not
+        if (inputJump && Grounded)
+        {
+            isJumping = true;
+            // Disable crounching when jumping
+            //isCrouching = false; 
+        }
+
+        HeadHittingDetect();
+        HandleWeaponSelect();
+        RotateCharacter();
+        Movement();
+    }
+
+    // With the inputs and animations defined, FixedUpdate is responsible for applying movements and actions to the player
+    private void FixedUpdate()
+    {
+        JumpAndGravity();
+    }
+
+    private void RotateCharacter()
+    {
+        forward = Camera.main.transform.forward;
+        right = Camera.main.transform.right;
+        forward.y = 0;
+        right.y = 0;
+        forward.Normalize();
+        right.Normalize();
+
+        Vector3 horizontalDirection = forward * inputVertical * Time.deltaTime + right * inputHorizontal * Time.deltaTime;
+
+        if (!lockRotation && (inputHorizontal != 0 || inputVertical != 0))
+        {
+            float angle = Mathf.Atan2(horizontalDirection.x, horizontalDirection.z) * Mathf.Rad2Deg;
+            Quaternion rotation = Quaternion.Euler(0, angle, 0);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 0.15f);
+        }
+        else if (lockRotation)
+        {
+            Quaternion rotation = Quaternion.Euler(0, cameraT.eulerAngles.y, 0);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 0.15f);
+        }
+    }
+
+    private void Movement()
+    {
+        float velocityAddition = 0;
+        if (isSprinting)
+            velocityAddition = sprintAddition;
+        if (isCrouching)
+            velocityAddition = -(velocity * 0.50f);  // Reduce velocity by 50% when crouching
+
+
+        directionX = inputHorizontal * (velocity + velocityAddition);
+        directionZ = inputVertical * (velocity + velocityAddition);
+
+        animator.SetFloat("speedZ", directionZ);
+        animator.SetFloat("speedX", directionX);
+
+        forward *= directionZ * Time.deltaTime;
+        right *= directionX * Time.deltaTime;
+
+        horizontalDirection = forward + right;
+        Vector3 movement = horizontalDirection;
+        movement.y = verticalDirection * Time.deltaTime;
+        cc.Move(movement);
+    }
+
+    private void JumpAndGravity()
+    {
+        if (Grounded)
+        {
+            // reset the fall timeout timer
+            _fallTimeoutDelta = FallTimeout;
+
+            // update animator if using character
+            // if (_hasAnimator)
+            // {
+            //     _animator.SetBool(_animIDJump, false);
+            //     _animator.SetBool(_animIDFreeFall, false);
+            // }
+
+            // stop our velocity dropping infinitely when grounded
+            if (verticalDirection < 0.0f)
+            {
+                verticalDirection = -2f;
+            }
+
+            // Jump
+            if (movementEnabled && inputJump && _jumpTimeoutDelta <= 0.0f)
+            {
+                // the square root of H * -2 * G = how much velocity needed to reach desired height
+                verticalDirection = Mathf.Sqrt(JumpHeight * 2f);
+
+                // update animator if using character
+                // if (_hasAnimator)
+                // {
+                //     _animator.SetBool(_animIDJump, true);
+                // }
+            }
+
+            // jump timeout
+            if (_jumpTimeoutDelta >= 0.0f)
+            {
+                _jumpTimeoutDelta -= Time.deltaTime;
+            }
+        }
+        else
+        {
+            // reset the jump timeout timer
+            _jumpTimeoutDelta = JumpTimeout;
+
+            // fall timeout
+            if (_fallTimeoutDelta >= 0.0f)
+            {
+                _fallTimeoutDelta -= Time.deltaTime;
+            }
+            // else
+            // {
+            //     // update animator if using character
+            //     if (_hasAnimator)
+            //     {
+            //         _animator.SetBool(_animIDFreeFall, true);
+            //     }
+            // }
+
+            // if we are not grounded, do not jump
+            inputJump = false;
+
+            // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
+            if (verticalDirection < _terminalVelocity)
+            {
+                verticalDirection += gravity * Time.deltaTime;
+            }
+        }
+    }
+
+    void GatherInputs()
+    {
         if (Input.GetKeyDown(KeyCode.RightShift))
         {
             lockRotation = !lockRotation;
@@ -84,20 +267,17 @@ public class ThirdPersonController : MonoBehaviour
         inputJump = Input.GetAxis("Jump") == 1f;
         inputSprint = Input.GetAxis("Fire3") == 1f;
 
-
-
         // Unfortunately GetAxis does not work with GetKeyDown, so inputs must be taken individually
         inputCrouch = Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.JoystickButton1);
+    }
 
-        // Check if you pressed the crouch input key and change the player's state
-        if (inputCrouch)
-            isCrouching = !isCrouching;
-
+    void HandleAnimations()
+    {
         // Run and Crouch animation
         // If dont have animator component, this block wont run
-        if (cc.isGrounded && animator != null)
+        if (Grounded && animator != null)
         {
-
+            print("grounded");
             // Crouch
             // Note: The crouch animation does not shrink the character's collider
             animator.SetBool("crouch", isCrouching);
@@ -113,100 +293,23 @@ public class ThirdPersonController : MonoBehaviour
             //AnimState
             animator.SetInteger("AnimState", animState);
         }
-
-        // Jump animation
-        if (animator != null)
-            animator.SetBool("air", cc.isGrounded == false);
-
-        // Handle can jump or not
-        if (inputJump && cc.isGrounded)
+        if (animator)
         {
-            isJumping = true;
-            // Disable crounching when jumping
-            //isCrouching = false; 
+            print(_jumpTimeoutDelta);
+            animator.SetBool("air", Grounded == false && _fallTimeoutDelta < 0.0f);
         }
+            
+    }
 
-        HeadHittingDetect();
+    private void GroundedCheck()
+    {
+        // set sphere position, with offset
+        Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset,
+            transform.position.z);
+        Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers,
+            QueryTriggerInteraction.Ignore);
 
-        HandleWeaponSelect();
-
-
-        // Sprinting velocity boost or crounching desacelerate
-        float velocityAdittion = 0;
-        if (isSprinting)
-            velocityAdittion = sprintAdittion;
-        if (isCrouching)
-            velocityAdittion = -(velocity * 0.50f); // -50% velocity
-
-        // Direction movement
-        float directionX = inputHorizontal * (velocity + velocityAdittion);
-        float directionZ = inputVertical * (velocity + velocityAdittion);
-        float directionY = 0;
-
-        animator.SetFloat("speedZ", directionZ);
-        animator.SetFloat("speedX", directionX);
-
-        directionX *= Time.deltaTime;
-        directionZ *= Time.deltaTime;
-
-        // Jump handler
-        if (isJumping)
-        {
-
-            // Apply inertia and smoothness when climbing the jump
-            // It is not necessary when descending, as gravity itself will gradually pulls
-            directionY = Mathf.SmoothStep(jumpForce, jumpForce * 0.30f, jumpElapsedTime / jumpTime) * Time.deltaTime;
-
-            // Jump timer
-            jumpElapsedTime += Time.deltaTime;
-            if (jumpElapsedTime >= jumpTime)
-            {
-                isJumping = false;
-                jumpElapsedTime = 0;
-            }
-        }
-
-        // Add gravity to Y axis
-        directionY = directionY - gravity * Time.deltaTime;
-
-
-        // --- Character rotation --- 
-
-        Vector3 forward = Camera.main.transform.forward;
-        Vector3 right = Camera.main.transform.right;
-
-        forward.y = 0;
-        right.y = 0;
-
-        forward.Normalize();
-        right.Normalize();
-
-        // Relate the front with the Z direction (depth) and right with X (lateral movement)
-        forward = forward * directionZ;
-        right = right * directionX;
-
-        if (lockRotation == false && (directionX != 0 || directionZ != 0))
-        {
-            float angle = Mathf.Atan2(forward.x + right.x, forward.z + right.z) * Mathf.Rad2Deg;
-            Quaternion rotation = Quaternion.Euler(0, angle, 0);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 0.15f);
-        }
-        else if (lockRotation)
-        {
-            Quaternion rotation = Quaternion.Euler(0, cameraT.eulerAngles.y, 0);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 0.15f);
-        }
-
-
-        // --- End rotation ---
-
-
-        Vector3 verticalDirection = Vector3.up * directionY;
-        Vector3 horizontalDirection = forward + right;
-
-        Vector3 moviment = verticalDirection + horizontalDirection;
-        cc.Move(moviment);
-
+        print("ground " + Grounded);
     }
 
     //This function makes the character end his jump if he hits his head on something
@@ -219,19 +322,31 @@ public class ThirdPersonController : MonoBehaviour
         // Uncomment this line to see the Ray drawed in your characters head
         // Debug.DrawRay(ccCenter, Vector3.up * headHeight, Color.red);
 
-        if (Physics.Raycast(ccCenter, Vector3.up, hitCalc))
+        if (Physics.Raycast(ccCenter, Vector3.up, hitCalc, GroundLayers))
         {
-            jumpElapsedTime = 0;
-            isJumping = false;
+            verticalDirection = 0;
         }
     }
 
     void HandleWeaponSelect()
     {
-        if(Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             animState = animState == 1 ? 0 : 1;
         }
     }
 
+    private void OnDrawGizmosSelected()
+    {
+        Color transparentGreen = new Color(0.0f, 1.0f, 0.0f, 0.35f);
+        Color transparentRed = new Color(1.0f, 0.0f, 0.0f, 0.35f);
+
+        if (Grounded) Gizmos.color = transparentGreen;
+        else Gizmos.color = transparentRed;
+
+        // when selected, draw a gizmo in the position of, and matching radius of, the grounded collider
+        Gizmos.DrawSphere(
+            new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z),
+            GroundedRadius);
+    }
 }

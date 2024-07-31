@@ -2070,11 +2070,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocity: 5
-  sprintAdittion: 3.5
-  jumpForce: 18
-  jumpTime: 0.85
+  sprintAddition: 3.5
   gravity: 9.8
   lockRotation: 1
+  Grounded: 1
+  GroundedOffset: -0.14
+  GroundedRadius: 0.28
+  GroundLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  JumpHeight: 1.2
+  JumpTimeout: 0.5
+  FallTimeout: 0.15
+  movementEnabled: 1
 --- !u!143 &8814700483101677560
 CharacterController:
   m_ObjectHideFlags: 0
@@ -2130,6 +2138,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapon: {fileID: 0}
   handT: {fileID: 8737577994645774118}
+  attackAnimation: {fileID: 0}
+  attackRange: 10
+  attackRadius: 10
+  attackableLayers:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &7717907957132265151
 GameObject:
   m_ObjectHideFlags: 0
