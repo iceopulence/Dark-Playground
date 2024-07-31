@@ -133,6 +133,7 @@ public class Button3D : MonoBehaviour
 
     private void ResetTransforms()
     {
+        transform.eulerAngles = originalRotation;
         MouseOverBehaviour(false); // Deactivate hover effects when the mouse exits
     }
 

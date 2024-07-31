@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MenuManager : MonoBehaviour
+public class MainMenuManager : MonoBehaviour
 {
     [System.Serializable]
     public class CameraTarget
@@ -13,6 +13,11 @@ public class MenuManager : MonoBehaviour
     public CameraTarget mainTarget;
     public CameraTarget settingsTarget;
     public CameraTarget creditsTarget;
+    public CameraTarget creditsTarget;
+    public CameraTarget turnAroundTarget;
+    public CameraTarget turnAroundTarget2;
+    public CameraTarget leaveTarget;
+
 
     public MainMenuCameraController cameraController;
 
@@ -23,7 +28,7 @@ public class MenuManager : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             OpenMain();
         }
@@ -31,26 +36,53 @@ public class MenuManager : MonoBehaviour
 
     public void PlayGame()
     {
-        cameraController.SetTargetTransform(mainTarget.targetTransform, mainTarget.smoothTime);
-        SceneManager.LoadScene(1);
-    }   
+        StartCoroutine(PlayGame());
+    }
 
     public void OpenMain()
     {
-        cameraController.SetTargetTransform(mainTarget.targetTransform, mainTarget.smoothTime);
+        StartCoroutine(OpenMain());
     }
 
     public void OpenSettings()
     {
-        cameraController.SetTargetTransform(settingsTarget.targetTransform, settingsTarget.smoothTime);
+        StartCoroutine(OpenSettings());
     }
 
     public void ShowCredits()
     {
-        cameraController.SetTargetTransform(creditsTarget.targetTransform, creditsTarget.smoothTime);
+        StartCoroutine(ShowCredits());
     }
 
     public void QuitGame()
+    {
+        StartCoroutine(QuitGame());
+    }
+
+
+    IEnumerator PlayGame()
+    {
+        cameraController.SetTargetTransform(mainTarget.targetTransform, mainTarget.smoothTime);
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene(1);
+    }
+
+    IEnumerator OpenMain()
+    {
+        cameraController.SetTargetTransform(mainTarget.targetTransform, mainTarget.smoothTime);
+    }
+
+    IEnumerator OpenSettings()
+    {
+        cameraController.SetTargetTransform(settingsTarget.targetTransform, settingsTarget.smoothTime);
+    }
+
+    IEnumerator ShowCredits()
+    {
+        cameraController.SetTargetTransform(creditsTarget.targetTransform, creditsTarget.smoothTime);
+    }
+
+    IEnumerator QuitGame()
     {
         Application.Quit();
     }
