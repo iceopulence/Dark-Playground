@@ -7427,6 +7427,34 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5139824880875984003, guid: 8545b90b242077b40b56f7753b575624, type: 3}
+      propertyPath: gravity
+      value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5139824880875984003, guid: 8545b90b242077b40b56f7753b575624, type: 3}
+      propertyPath: Grounded
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5139824880875984003, guid: 8545b90b242077b40b56f7753b575624, type: 3}
+      propertyPath: jumpTime
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5139824880875984003, guid: 8545b90b242077b40b56f7753b575624, type: 3}
+      propertyPath: jumpForce
+      value: 12.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5139824880875984003, guid: 8545b90b242077b40b56f7753b575624, type: 3}
+      propertyPath: JumpHeight
+      value: 65
+      objectReference: {fileID: 0}
+    - target: {fileID: 5139824880875984003, guid: 8545b90b242077b40b56f7753b575624, type: 3}
+      propertyPath: FallTimeout
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5139824880875984003, guid: 8545b90b242077b40b56f7753b575624, type: 3}
+      propertyPath: JumpTimeout
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5139824880875984003, guid: 8545b90b242077b40b56f7753b575624, type: 3}
       propertyPath: GroundLayers.m_Bits
       value: 1
       objectReference: {fileID: 0}
@@ -7533,6 +7561,10 @@ PrefabInstance:
     - target: {fileID: 7668297879549561290, guid: 8545b90b242077b40b56f7753b575624, type: 3}
       propertyPath: m_Layer
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7668297879549561290, guid: 8545b90b242077b40b56f7753b575624, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7717907957132265151, guid: 8545b90b242077b40b56f7753b575624, type: 3}
       propertyPath: m_Layer
