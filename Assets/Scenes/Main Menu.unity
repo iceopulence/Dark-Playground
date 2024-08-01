@@ -173,8 +173,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 67258337}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -15.95, y: 5.3, z: 29.1}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: -13.745968, y: 5.941468, z: 15.290167}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -948,7 +948,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 749924464}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc6cc99880676194388ba912b3fbec20, type: 3}
   m_Name: 
@@ -1541,13 +1541,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1768725575}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -15.95, y: 68.1, z: 34.4}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0.7071068, w: 0}
+  m_LocalPosition: {x: -15.95, y: 68.1, z: 10.77}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1591153842}
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 180, z: 0}
 --- !u!1 &1889625319
 GameObject:
   m_ObjectHideFlags: 0
@@ -1999,15 +1999,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainTarget:
-    targetTransform: {fileID: 0}
-    smoothTime: 0
+    targetTransform: {fileID: 67258338}
+    smoothTime: 3
+  faceTarget:
+    targetTransform: {fileID: 55143975}
+    smoothTime: 1
   settingsTarget:
-    targetTransform: {fileID: 0}
-    smoothTime: 0
+    targetTransform: {fileID: 1386855199}
+    smoothTime: 3
   creditsTarget:
-    targetTransform: {fileID: 0}
-    smoothTime: 0
-  cameraController: {fileID: 0}
+    targetTransform: {fileID: 1768725576}
+    smoothTime: 0.8
+  cameraController: {fileID: 749924468}
 --- !u!4 &2116574756
 Transform:
   m_ObjectHideFlags: 0

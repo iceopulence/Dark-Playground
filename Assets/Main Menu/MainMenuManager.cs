@@ -5,6 +5,7 @@ using System.Collections;
 public class MainMenuManager : MonoBehaviour
 {
     public CameraTarget mainTarget;
+    public CameraTarget faceTarget;
     public CameraTarget settingsTarget;
     public CameraTarget creditsTarget;
     public MainMenuCameraController cameraController;
@@ -44,6 +45,10 @@ public class MainMenuManager : MonoBehaviour
         {
             openSettingsCoroutine = StartCoroutine(OpenSettingsCoroutine());
         }
+        else
+        {
+            Debug.LogError("tried to start open settings but coroutine was not null");
+        }
     }
 
     public void ShowCredits()
@@ -59,7 +64,7 @@ public class MainMenuManager : MonoBehaviour
 
     IEnumerator PlayGameCoroutine()
     {
-        cameraController.SetTargetTransform(mainTarget.targetTransform, mainTarget.smoothTime);
+        cameraController.SetTargetTransform(faceTarget.targetTransform, faceTarget.smoothTime);
         //fade to black subscibe to complete event
         yield return new WaitForSeconds(1);
         playGameCoroutine = null;
