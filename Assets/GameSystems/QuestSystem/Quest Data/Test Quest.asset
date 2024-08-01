@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cb56611815d6c643aa2f5b2dbce4c79, type: 3}
+  m_Name: Test Quest
+  m_EditorClassIdentifier: 
+  questName: Get the thingy
+  questDescription: find the thingy behind the mutilated fish bucket
+  objectives:
+  - description: Collect the specified item.
+    objectiveType: 1
+    status: 1
+    isOptional: 0
+    location: {x: -55.605232, y: -5.36, z: 34.08995}
+    sceneName: new Outside
+    requiredItemCount: 1
+    currentItemCount: 0
+    targetId: asdf
+  - description: Collect the specified item.
+    objectiveType: 1
+    status: 0
+    isOptional: 0
+    location: {x: -24.555233, y: -5.36, z: 236.38995}
+    sceneName: new Outside
+    requiredItemCount: 1
+    currentItemCount: 0
+    targetId: key1
+  - description: Collect the specified item.
+    objectiveType: 1
+    status: 0
+    isOptional: 1
+    location: {x: -37.945232, y: -5.36, z: 240.56795}
+    sceneName: new Outside
+    requiredItemCount: 1
+    currentItemCount: 0
+    targetId: key2
+  - description: Collect the specified item.
+    objectiveType: 1
+    status: 0
+    isOptional: 0
+    location: {x: -69.21523, y: -5.36, z: 34.08995}
+    sceneName: new Outside
+    requiredItemCount: 1
+    currentItemCount: 0
+    targetId: 
+  status: 1
