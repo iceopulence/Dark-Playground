@@ -89,7 +89,7 @@ public class Button3D : MonoBehaviour
     private void OnMouseEnter()
     {
         onMouseEnter.Invoke();
-        PlayAudio(highlightAudio, loop: true);
+        PlayAudio(highlightAudio, loopAudio);
         MouseOverBehaviour(true); // Activate hover effects
     }
 
