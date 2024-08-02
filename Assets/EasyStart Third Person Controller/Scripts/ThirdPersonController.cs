@@ -72,7 +72,7 @@ public class ThirdPersonController : MonoBehaviour
     public float JumpHeight = 1.2f;
     [Tooltip("Time required to pass before being able to jump again. Set to 0f to instantly jump again")]
     public float JumpTimeout = 0.50f;
-    [SerializeField] private float _jumpTimeoutDelta;
+    private float _jumpTimeoutDelta;
     private float _fallTimeoutDelta;
 
     [Tooltip("Time required to pass before entering the fall state. Useful for walking down stairs")]
@@ -277,7 +277,6 @@ public class ThirdPersonController : MonoBehaviour
         // If dont have animator component, this block wont run
         if (Grounded && animator != null)
         {
-            print("grounded");
             // Crouch
             // Note: The crouch animation does not shrink the character's collider
             animator.SetBool("crouch", isCrouching);
@@ -295,7 +294,6 @@ public class ThirdPersonController : MonoBehaviour
         }
         if (animator)
         {
-            print(_jumpTimeoutDelta);
             animator.SetBool("air", Grounded == false && _fallTimeoutDelta < 0.0f);
         }
             
@@ -309,7 +307,7 @@ public class ThirdPersonController : MonoBehaviour
         Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers,
             QueryTriggerInteraction.Ignore);
 
-        print("ground " + Grounded);
+        // print("ground " + Grounded);
     }
 
     //This function makes the character end his jump if he hits his head on something

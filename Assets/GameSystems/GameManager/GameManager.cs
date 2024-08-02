@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     
     [Header("Player Variables")]
-    [SerializeField] GameObject playerStuff;
     public GameObject player;
     public Transform playerT { get; private set; }
     ThirdPersonController playerController;
@@ -20,7 +19,7 @@ public class GameManager : MonoBehaviour
     [Space]
     [SerializeField] PauseMenu pauseMenu;
     [SerializeField] TextMeshProUGUI objectiveText;
-    private const float nonActiveAlphaValue = 0.15f;
+    private const float nonActiveAlphaValue = 0.7f;
     public float textFadeOutSpeed = 0.5f;
     public AudioSource audioSource { get; private set; }
 
@@ -39,7 +38,6 @@ public class GameManager : MonoBehaviour
         if(player == null)
         {
             player = GameObject.FindWithTag("Player");
-            playerStuff = player.transform.parent.gameObject;
         }
 
         audioSource = GetComponent<AudioSource>();
@@ -85,11 +83,6 @@ public class GameManager : MonoBehaviour
     //     if(playerCC != null){playerCC.enabled = enabled;}
     //     if(playerInteraction != null){playerInteraction.enabled = enabled;}
     // }
-
-    public GameObject GetPlayerStuff()
-    {
-        return playerStuff;
-    }
 
     // public void SetPauseEnabled(bool enabled)
     // {

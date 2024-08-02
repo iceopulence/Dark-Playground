@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 80556e3e8ad3f454cb1f9ddf97971798
+guid: a223259459e8f1f499083c44a3e1a73c
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Darker
+  - gothical
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

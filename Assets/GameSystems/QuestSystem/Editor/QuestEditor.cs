@@ -39,7 +39,7 @@ public class QuestEditor : Editor
                 string objectiveID = objectiveTransform.gameObject.name;
                 QuestObjective newObjective = new QuestObjective(objectiveType)
                 {
-                    description = GetObjectiveDescription(objectiveType),
+                    description = GetObjectiveDescription(objectiveType, objectiveTransform.gameObject.name),
                     location = objectiveTransform != null ? objectiveTransform.position : Vector3.zero,
                     sceneName = objectiveTransform != null ? objectiveTransform.gameObject.scene.name : "",
                     status = objectiveStatus,
@@ -50,12 +50,14 @@ public class QuestEditor : Editor
 
                 if (objectiveType == ObjectiveType.Item)
                 {
-                    var collectibleItem = objectiveTransform.GetComponent<CollectibleQuestItem>();
+                    CollectibleQuestItem collectibleItem = objectiveTransform.GetComponent<CollectibleQuestItem>();
                     if (collectibleItem == null)
                     {
                         collectibleItem = objectiveTransform.gameObject.AddComponent<CollectibleQuestItem>();
-                        Debug.Log("Added collectible quest item component to " );
+                        collectibleItem.itemId = objectiveID;
+                        Debug.Log("Added collectible quest item component to " + objectiveTransform.gameObject.name + " with ID: " + collectibleItem.itemId);
                     }
+                    collectibleItem.itemId = objectiveID;
                 }
                 else if(objectiveType == ObjectiveType.Interactable)
                 {
@@ -65,6 +67,7 @@ public class QuestEditor : Editor
                         interactableObjective = objectiveTransform.gameObject.AddComponent<QuestInteractable>();
                         Debug.Log("Added collectible quest item component to " );
                     }
+                    interactableObjective.itemId = objectiveID;
                 }
 
                 quest.objectives.Add(newObjective);
@@ -93,22 +96,22 @@ public class QuestEditor : Editor
         }
     }
 
-    private string GetObjectiveDescription(ObjectiveType type)
+    private string GetObjectiveDescription(ObjectiveType type, string objectiveName)
     {
         switch (type)
         {
             case ObjectiveType.Location:
-                return "Reach the specified location.";
+                return "Reach the " + objectiveName;
             case ObjectiveType.Item:
-                return "Collect the specified item.";
+                return "Collect the " + objectiveName;
             case ObjectiveType.DialogueNode:
                 return "Pass the specified dialogue node.";
             case ObjectiveType.Kill:
-                return "Defeat the specified enemy.";
+                return "Defeat the " + objectiveName;
             case ObjectiveType.Escort:
-                return "Escort the specified NPC to the destination.";
+                return "Escort the specified NPC to " + objectiveName;
             case ObjectiveType.Interactable:
-                return "Interact with the specified interactable.";
+                return "Interact with the " + objectiveName;
             default:
                 return "Objective";
         }

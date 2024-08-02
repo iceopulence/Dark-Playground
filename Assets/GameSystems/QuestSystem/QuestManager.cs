@@ -125,6 +125,9 @@ public class QuestManager : MonoBehaviour
                         StartNextQuest(nextQuestData);
                     }
                 }
+                else{
+                    GameManager.Instance.UpdateObjectiveText("");
+                }
             }
             else
             {
