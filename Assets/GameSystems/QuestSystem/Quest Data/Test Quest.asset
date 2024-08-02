@@ -14,41 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questName: Get the thingy
   questDescription: find the thingy behind the mutilated fish bucket
-  objectives:
-  - description: Collect the specified item.
-    objectiveType: 1
-    status: 1
-    isOptional: 0
-    location: {x: -55.605232, y: -5.36, z: 34.08995}
-    sceneName: new Outside
-    requiredItemCount: 1
-    currentItemCount: 0
-    targetId: asdf
-  - description: Collect the specified item.
-    objectiveType: 1
-    status: 0
-    isOptional: 0
-    location: {x: -24.555233, y: -5.36, z: 236.38995}
-    sceneName: new Outside
-    requiredItemCount: 1
-    currentItemCount: 0
-    targetId: key1
-  - description: Collect the specified item.
-    objectiveType: 1
-    status: 0
-    isOptional: 1
-    location: {x: -37.945232, y: -5.36, z: 240.56795}
-    sceneName: new Outside
-    requiredItemCount: 1
-    currentItemCount: 0
-    targetId: key2
-  - description: Collect the specified item.
-    objectiveType: 1
-    status: 0
-    isOptional: 0
-    location: {x: -69.21523, y: -5.36, z: 34.08995}
-    sceneName: new Outside
-    requiredItemCount: 1
-    currentItemCount: 0
-    targetId: 
+  objectives: []
   status: 1
+  linkedQuest: {fileID: 0}

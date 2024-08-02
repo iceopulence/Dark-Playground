@@ -9,6 +9,7 @@ public class MainMenuManager : MonoBehaviour
     public CameraTarget settingsTarget;
     public CameraTarget creditsTarget;
     public MainMenuCameraController cameraController;
+    public QuitGameBehaviour quitGame;
 
     Coroutine playGameCoroutine;
     Coroutine openSettingsCoroutine;
@@ -36,7 +37,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void OpenMain()
     {
-        cameraController.SetTargetTransform(mainTarget.targetTransform, mainTarget.smoothTime);
+        cameraController.SetTargetTransform(mainTarget.transform, mainTarget.smoothTime);
     }
 
     public void OpenSettings()
@@ -53,18 +54,17 @@ public class MainMenuManager : MonoBehaviour
 
     public void ShowCredits()
     {
-        cameraController.SetTargetTransform(creditsTarget.targetTransform, creditsTarget.smoothTime);
+        cameraController.SetTargetTransform(creditsTarget.transform, creditsTarget.smoothTime);
     }
 
     public void QuitGame()
     {
-        Application.Quit();
+        quitGame.StartCinematic();
     }
-
 
     IEnumerator PlayGameCoroutine()
     {
-        cameraController.SetTargetTransform(faceTarget.targetTransform, faceTarget.smoothTime);
+        cameraController.SetTargetTransform(faceTarget.transform, faceTarget.smoothTime);
         //fade to black subscibe to complete event
         yield return new WaitForSeconds(1);
         playGameCoroutine = null;
@@ -74,7 +74,7 @@ public class MainMenuManager : MonoBehaviour
 
     IEnumerator OpenSettingsCoroutine()
     {
-        cameraController.SetTargetTransform(settingsTarget.targetTransform, settingsTarget.smoothTime);
+        cameraController.SetTargetTransform(settingsTarget.transform, settingsTarget.smoothTime);
         yield return null; //possibly implement animation afterwards
 
         openSettingsCoroutine = null;
@@ -82,9 +82,3 @@ public class MainMenuManager : MonoBehaviour
 }
 
 
-[System.Serializable]
-public class CameraTarget
-{
-    public Transform targetTransform;
-    public float smoothTime;
-}

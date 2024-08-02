@@ -9,6 +9,8 @@ public class Quest : ScriptableObject
     public List<QuestObjective> objectives;
     public QuestStatus status;
 
+    public Quest linkedQuest;
+
     public bool CheckObjectives()
     {
         foreach (var objective in objectives)

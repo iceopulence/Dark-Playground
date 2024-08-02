@@ -8,6 +8,8 @@ public class ScreenFader : MonoBehaviour
     public Image fadeImage;
     public UnityEvent onFadeComplete;
 
+    public bool isFading = false;
+
     private void Start()
     {
         // Ensure the fade image is fully transparent at start
@@ -26,6 +28,7 @@ public class ScreenFader : MonoBehaviour
 
     private IEnumerator Fade(float targetAlpha, float duration)
     {
+        isFading = true;
         float startAlpha = fadeImage.color.a;
         float time = 0;
 
@@ -38,6 +41,7 @@ public class ScreenFader : MonoBehaviour
         }
 
         SetAlpha(targetAlpha);
+        isFading = false;
         onFadeComplete.Invoke();
     }
 

@@ -5913,6 +5913,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9878defec7032a43b377c98994430fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gizmoColor: {r: 1, g: 1, b: 0, a: 0.5}
+  gizmoRadius: 1
   itemId: Cube (1)
 --- !u!65 &1428415209
 BoxCollider:
@@ -7453,6 +7455,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9878defec7032a43b377c98994430fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gizmoColor: {r: 1, g: 1, b: 0, a: 0.5}
+  gizmoRadius: 1
   itemId: Cube
 --- !u!1 &1888791053
 GameObject:

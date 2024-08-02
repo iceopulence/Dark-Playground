@@ -15,7 +15,7 @@ MonoBehaviour:
   questName: Get le cube
   questDescription: go after the cube
   objectives:
-  - description: Collect the specified item.
+  - description: Collect cube
     objectiveType: 1
     status: 1
     isOptional: 0
@@ -24,7 +24,7 @@ MonoBehaviour:
     requiredItemCount: 1
     currentItemCount: 0
     targetId: Cube
-  - description: Collect the specified item.
+  - description: Collect cube again
     objectiveType: 1
     status: 0
     isOptional: 0
