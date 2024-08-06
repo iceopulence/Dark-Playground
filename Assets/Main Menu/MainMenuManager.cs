@@ -4,15 +4,30 @@ using System.Collections;
 
 public class MainMenuManager : MonoBehaviour
 {
+    [Header("Controllers")]
+    public MainMenuCameraController cameraController;
+    public QuitGameBehaviour quitGame;
+    [SerializeField] ScreenFader screenFader;
+
+    [Header("Camera Targets")]
     public CameraTarget mainTarget;
     public CameraTarget faceTarget;
     public CameraTarget settingsTarget;
     public CameraTarget creditsTarget;
-    public MainMenuCameraController cameraController;
-    public QuitGameBehaviour quitGame;
 
     Coroutine playGameCoroutine;
     Coroutine openSettingsCoroutine;
+
+    void Awake()
+    {
+        if(screenFader == null)
+        {
+            GameObject screenFaderObj = GameObject.FindWithTag("Screen Fade");
+            if(screenFaderObj != null)
+                screenFader = screenFaderObj.GetComponent<ScreenFader>();
+        }
+
+    }
 
     void Start()
     {
@@ -65,8 +80,9 @@ public class MainMenuManager : MonoBehaviour
     IEnumerator PlayGameCoroutine()
     {
         cameraController.SetTargetTransform(faceTarget.transform, faceTarget.smoothTime);
-        //fade to black subscibe to complete event
-        yield return new WaitForSeconds(1);
+        screenFader.FadeToBlack(faceTarget.smoothTime);
+        yield return new WaitWhile(() => screenFader.isFading);
+
         playGameCoroutine = null;
         SceneManager.LoadScene(1);
         

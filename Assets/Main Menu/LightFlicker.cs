@@ -15,12 +15,14 @@ public class LightFlicker : MonoBehaviour
 
     private float nextFlickerTime = 0f;
 
+    public bool isFlickering = false;
+
     void Update()
     {
-        if (Time.time >= nextFlickerTime)
+        if (!isFlickering && Time.time >= nextFlickerTime)
         {
+            isFlickering = true;
             StartCoroutine(Flicker());
-            SetNextFlickerTime();
         }
     }
 
@@ -38,13 +40,26 @@ public class LightFlicker : MonoBehaviour
 
         float progress = 0f; // Progress of the lerp
 
-        while (progress < 1f)
+        while (progress < flickerDuration * 0.5f)
         {
-            progress += Time.deltaTime * lerpSpeed / flickerDuration;
+            progress += Time.deltaTime * lerpSpeed / flickerDuration * 0.5f;
             flickerLight.intensity = Mathf.Lerp(startIntensity, targetIntensity, progress);
             yield return null;
         }
 
+        progress = 0f; // Progress of the lerp
+
+        while (progress < flickerDuration * 0.5f)
+        {
+            progress += Time.deltaTime * lerpSpeed / flickerDuration * 0.5f;
+            flickerLight.intensity = Mathf.Lerp(targetIntensity, startIntensity, progress);
+            yield return null;
+        
+        }
         flickerLight.intensity = minIntensity;  // reset to minimum intensity after flickering
+
+        SetNextFlickerTime();
+        
+        isFlickering = false;
     }
 }

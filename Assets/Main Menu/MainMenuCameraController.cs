@@ -49,6 +49,11 @@ public class MainMenuCameraController : MonoBehaviour
         targetRotation = Quaternion.Euler(forwardDirection);
     }
 
+    public void SetTargetRotation(Quaternion newRotation)
+    {
+        targetRotation = newRotation;
+    }
+
     public void SetSmoothTime(float smoothTime)
     {
         this.smoothTime = smoothTime;

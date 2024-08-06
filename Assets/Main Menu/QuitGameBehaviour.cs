@@ -22,7 +22,7 @@ public class QuitGameBehaviour : MonoBehaviour
 
     AudioClip AYSVoiceline;
 
-    public ScreenFader fadeScreen;
+    public ScreenFader screenFader;
 
     public UnityEvent onDenyQuit;
 
@@ -38,24 +38,22 @@ public class QuitGameBehaviour : MonoBehaviour
         menuCameraController.SetTargetTransform(turnAroundTarget.transform);
         yield return null;
         yield return new WaitWhile(() => menuCameraController.isAnimating);
-        print("asdf");
+
         menuCameraController.SetTargetTransform(areYouSurePosition.transform);
         yield return null;
         yield return new WaitWhile(() => menuCameraController.isAnimating);
-        print("asdf2");
-        yield return null;
-        menuCameraController.SetTargetRotation(Vector3.zero);
+
+        menuCameraController.SetTargetRotation(new Vector3(0f,193f,0f));
         AreYouSure();
-        yield return null;
         yield return new WaitWhile(() => menuCameraController.isAnimating);
     }
 
     void AreYouSure()
     {
+        areYouSureAboutThat.SetActive(true);
         if(audioSource && AYSVoiceline)
         {
             audioSource.clip = AYSVoiceline;
-            areYouSureAboutThat.SetActive(true);
             audioSource.Play();
         }
     }
@@ -63,8 +61,9 @@ public class QuitGameBehaviour : MonoBehaviour
     IEnumerator ConfirmQuitCoroutine()
     {
         menuCameraController.SetTargetTransform(leaveTarget.transform);
-        fadeScreen.FadeToBlack(3);
-        yield return new WaitWhile(() => fadeScreen.isFading);
+        screenFader.FadeToBlack(3);
+        yield return new WaitWhile(() => screenFader.isFading);
+        
         Application.Quit();
     }
 
