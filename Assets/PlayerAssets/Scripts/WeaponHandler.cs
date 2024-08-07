@@ -6,6 +6,7 @@ public class WeaponHandler : MonoBehaviour
 {
     private Animator animator;
     public GameObject weapon;
+    public Weapon heldWeapon;
 
     int weaponState = 0;
 
@@ -16,16 +17,19 @@ public class WeaponHandler : MonoBehaviour
     bool holdingWeapon = false;
 
     [Header("Attacking Stuff")]
-    public AnimationClip attackAnimation;
     bool attacking = false;
 
     public float attackRange = 10f;
-    public float attackRadius = 10f;
+    public Vector3 attackSize = Vector3.one;
+    [SerializeField] float attackOrigin = 2f;
     [SerializeField] LayerMask attackableLayers;
+
+    Transform camT;
 
     void Awake()
     {
         animator = GetComponent<Animator>();
+        camT = Camera.main.transform;
     }
 
     // Update is called once per frame
@@ -45,33 +49,70 @@ public class WeaponHandler : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse0) && holdingWeapon)
         {
-            Attack();
+            StartAttack();
         }
     }
 
-    void Attack()
-    {
-        attacking = true;
-        StartCoroutine(AttackCoroutine());
-    }
-
-    IEnumerator AttackCoroutine()
+    void StartAttack()
     {
         animator.SetTrigger("Attacking");
-        
-        // Vector3 spherecastOrigin = transform.position + Vector3.up * originOffset;
+    }
 
-        //check if we hit anything
-        RaycastHit hit;
-        // if(Physics.SphereCast(spherecastOrigin, attackSize, transform.forward, out hit, attackRange, attackableLayer))
-        // {
-        //     Health attackedHealth = hit.transform.GetComponent<attackedHealth>();
-        //     attackedHealth.Damage(heldWeapon.damage);
-        // }
+    public void Attack()
+    {
+        attacking = true;
+        // StartCoroutine(AttackCoroutine());
 
-        yield return new WaitForSeconds(attackAnimation.length);
+        Collider[] hitColliders = Physics.OverlapBox(transform.position + transform.forward * (attackRange * 0.5f), attackSize * 0.5f, transform.rotation, attackableLayers);
+
+
+        foreach (Collider col in hitColliders)
+        {
+            print(col.transform.gameObject);
+            Health attackedHealth = col.transform.GetComponent<Health>();
+            if(attackedHealth != null)
+            {
+                attackedHealth.Damage(10);
+            }
+        }
+    }
+
+    public void EndAttack()
+    {
         attacking = false;
     }
+
+    // IEnumerator AttackCoroutine()
+    // {
+    //     Vector3 spherecastOrigin = transform.position + Vector3.up * attackOrigin;
+
+    //     List<Health> hitHealths = new List<Health>();
+
+    //     //check if we hit anything
+
+    //     while(attacking)
+    //     {
+    //         print("attacking");
+    //         RaycastHit hit;
+    //         if (Physics.SphereCast(spherecastOrigin, attackSize, camT.forward, out hit, attackRange, attackableLayers))
+    //         {
+    //             print(hit.transform.gameObject.name);
+    //             Health attackedHealth = hit.transform.GetComponent<Health>();
+    //             yield return null;
+    //             if (!hitHealths.Contains(attackedHealth))
+    //             {
+    //                 attackedHealth.Damage(heldWeapon.damage);
+    //                 hitHealths.Add(attackedHealth);
+    //             }
+
+    //             yield return null;
+    //         }
+    //     }
+
+
+    //     // yield return new WaitWhile(() => attacking);
+    //     attacking = false;
+    // }
 
     void EquipWeapon()
     {
@@ -96,5 +137,12 @@ public class WeaponHandler : MonoBehaviour
     void DeSpawnWeapon()
     {
         Destroy(weaponSpawned);
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Vector3 attackCenter = transform.position + transform.forward * (attackRange / 2) + Vector3.up * attackOrigin;
+        Gizmos.DrawWireCube(attackCenter, new Vector3(attackSize.x, attackSize.y, attackRange));
     }
 }
