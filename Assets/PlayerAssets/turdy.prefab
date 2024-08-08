@@ -2223,7 +2223,6 @@ MonoBehaviour:
     m_Bits: 1
   JumpHeight: 65
   JumpTimeout: 0.05
-  _jumpTimeoutDelta: 0
   FallTimeout: 0.25
   movementEnabled: 1
 --- !u!143 &8814700483101677560
@@ -2279,7 +2278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c775577a15217542a4715ffc7304696, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weapon: {fileID: 0}
+  weapon: {fileID: 8260282815198441961, guid: f56a06de1db9bf942ac99c71f1110cdd, type: 3}
   handT: {fileID: 8737577994645774118}
   attackAnimation: {fileID: 0}
   attackRange: 10

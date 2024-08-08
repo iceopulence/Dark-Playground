@@ -20,7 +20,7 @@ public class QuitGameBehaviour : MonoBehaviour
 
     public AudioSource audioSource;
 
-    AudioClip AYSVoiceline;
+    public AudioClip AYSVoiceline;
 
     public ScreenFader screenFader;
 

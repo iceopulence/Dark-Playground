@@ -53,7 +53,12 @@ public class Button3D : MonoBehaviour
         targetPos = originalPos + posOffset;
 
         rb.useGravity = false;
-        rb.constraints = RigidbodyConstraints.FreezePosition;
+
+        if (rb.constraints != RigidbodyConstraints.FreezeAll)
+        {
+            rb.constraints = RigidbodyConstraints.FreezePosition;
+        }
+
 
         _3dSpeed = useTdirection ? transform.TransformDirection(_3dSpeed) : _3dSpeed;
     }
