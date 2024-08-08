@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+
 public class Health : MonoBehaviour
 {
     public float maxHealth = 100;
@@ -19,7 +20,7 @@ public class Health : MonoBehaviour
         currentHealth -= damage;
         currentHealth = Mathf.Max(currentHealth, 0);
 
-        print("damaged" + currentHealth);
+        print("damaged " + currentHealth);
 
         // Check if health has dropped to zero or below.
         if (currentHealth <= 0)

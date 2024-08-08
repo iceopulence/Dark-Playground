@@ -2278,7 +2278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c775577a15217542a4715ffc7304696, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weapon: {fileID: 8260282815198441961, guid: f56a06de1db9bf942ac99c71f1110cdd, type: 3}
+  weapon: {fileID: 3393718320142397542, guid: f0f1bf583b39fac4a8d9347d7c4d94cc, type: 3}
   handT: {fileID: 8737577994645774118}
   attackAnimation: {fileID: 0}
   attackRange: 10
