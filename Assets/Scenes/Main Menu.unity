@@ -2321,7 +2321,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.607
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -3874,6 +3874,7 @@ MonoBehaviour:
     transform: {fileID: 145265485}
     smoothTime: 1
   audioSource: {fileID: 1193439747}
+  AYSVoiceline: {fileID: 8300000, guid: 3c69c0ab477b6e64c829c2e8ee1fb34c, type: 3}
   screenFader: {fileID: 0}
   onDenyQuit:
     m_PersistentCalls:
