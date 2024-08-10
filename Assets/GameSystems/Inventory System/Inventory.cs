@@ -12,6 +12,12 @@ public class Inventory : MonoBehaviour
         items.Add(item, lastItem);
     }
 
+    public void AddItem(DropInfo drop)
+    {
+        // create an item with drop info, then add it
+        // items.Add(item, lastItem);
+    }
+
     public void RemoveItem(Item item)
     {
         items.Remove(item);

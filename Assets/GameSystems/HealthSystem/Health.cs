@@ -8,6 +8,10 @@ public class Health : MonoBehaviour
 
     public UnityEvent onDeath;
 
+    public AudioClip[] hitSounds;
+
+    public GameObject droppedItem;
+
     void Start()
     {
         // Initialize health to maximum at the start.
@@ -21,6 +25,11 @@ public class Health : MonoBehaviour
         currentHealth = Mathf.Max(currentHealth, 0);
 
         print("damaged " + currentHealth);
+
+        if(hitSounds != null)
+        {
+            AudioSource.PlayClipAtPoint(hitSounds[Random.Range(0, hitSounds.Length)], transform.position);
+        }
 
         // Check if health has dropped to zero or below.
         if (currentHealth <= 0)
@@ -42,6 +51,8 @@ public class Health : MonoBehaviour
         Debug.Log(gameObject.name + " has died.");
         // Optionally deactivate the game object.
         // gameObject.SetActive(false);
+
+        Instantiate(droppedItem, transform.position, transform.rotation);
 
         onDeath.Invoke();
     }

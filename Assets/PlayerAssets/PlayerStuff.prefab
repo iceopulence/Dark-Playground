@@ -197,7 +197,6 @@ GameObject:
   - component: {fileID: 4319257652456779850}
   - component: {fileID: 1465303933510487824}
   - component: {fileID: 5696424550198082297}
-  - component: {fileID: 3945234490512922778}
   - component: {fileID: 7752665762705549014}
   m_Layer: 0
   m_Name: Main Camera (1)
@@ -215,7 +214,7 @@ Transform:
   m_GameObject: {fileID: 6836088984207674351}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.2999878, y: 1.6069999, z: -3.2550964}
+  m_LocalPosition: {x: 0.2999878, y: 1.6070001, z: -3.2550964}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -334,23 +333,6 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &3945234490512922778
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6836088984207674351}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7410bfcefa03c2741bc4b624983a0a81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CinemachineCameraTarget: {fileID: 2427509922509204129}
-  TopClamp: 70
-  BottomClamp: -30
-  CameraAngleOverride: 0
-  LockCameraPosition: 0
 --- !u!114 &7752665762705549014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -721,7 +703,7 @@ Transform:
   m_GameObject: {fileID: 8801293446149904310}
   serializedVersion: 2
   m_LocalRotation: {x: 0.059283487, y: 0.6664485, z: -0.05330606, w: 0.74127614}
-  m_LocalPosition: {x: 0.2999878, y: 1.6069999, z: -3.2550964}
+  m_LocalPosition: {x: 0.2999878, y: 1.6070001, z: -3.2550964}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1320,19 +1302,48 @@ PrefabInstance:
       propertyPath: m_Name
       value: turdle
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5139824880875984003, guid: 8545b90b242077b40b56f7753b575624, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7668297879549561290, guid: 8545b90b242077b40b56f7753b575624, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 2327967164846922925}
   m_SourcePrefab: {fileID: 100100000, guid: 8545b90b242077b40b56f7753b575624, type: 3}
+--- !u!1 &181447679260121188 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7668297879549561290, guid: 8545b90b242077b40b56f7753b575624, type: 3}
+  m_PrefabInstance: {fileID: 7561515156819186094}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2327967164846922925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 181447679260121188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7410bfcefa03c2741bc4b624983a0a81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  velocity: 5
+  sprintAddition: 3.5
+  gravity: 9.8
+  lockRotation: 0
+  GroundedOffset: -0.14
+  GroundedRadius: 0.28
+  GroundLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  JumpHeight: 1.2
+  JumpTimeout: 0.5
+  FallTimeout: 0.15
+  movementEnabled: 1
 --- !u!4 &706908046243005150 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6998757543423939440, guid: 8545b90b242077b40b56f7753b575624, type: 3}
-  m_PrefabInstance: {fileID: 7561515156819186094}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &2427509922509204129 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5287184805171378959, guid: 8545b90b242077b40b56f7753b575624, type: 3}
   m_PrefabInstance: {fileID: 7561515156819186094}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &3024358679531655982 stripped
