@@ -11,12 +11,33 @@ public class FootstepSounds : MonoBehaviour
     [SerializeField]
     private float FootstepAudioVolume = 0.5f;
 
+    [Header("AudioSource Settings")]
+    [SerializeField] AudioSource footStepAudioSource;
+    public float pitchRange = 0.25f;
+    public float pitchOffset = 0;
+    bool useOwnSource = false;
+
+    void Awake()
+    {
+        useOwnSource = footStepAudioSource != null;
+    }
+
     public void OnFootstep(AnimationEvent animationEvent)
     {
         if (animationEvent.animatorClipInfo.weight > 0.5f && FootstepAudioClips.Length > 0)
         {
             int index = Random.Range(0, FootstepAudioClips.Length);
-            AudioSource.PlayClipAtPoint(FootstepAudioClips[index], transform.position, FootstepAudioVolume);
+
+            if(useOwnSource)
+            {
+                float randomPitch = Random.Range(1 + pitchOffset - pitchRange, 1 + pitchOffset + pitchRange);
+                footStepAudioSource.pitch = randomPitch;
+                footStepAudioSource.PlayOneShot(FootstepAudioClips[index], FootstepAudioVolume);
+            }
+            else
+            {
+                AudioSource.PlayClipAtPoint(FootstepAudioClips[index], transform.position, FootstepAudioVolume);
+            }
         }
     }
 

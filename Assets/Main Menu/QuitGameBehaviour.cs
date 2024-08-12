@@ -18,15 +18,27 @@ public class QuitGameBehaviour : MonoBehaviour
 
     public CameraTarget areYouSurePosition;
 
-    public AudioSource audioSource;
+    public AudioSource aysAudioSource;
+    public AudioSource footStepAudioSource;
 
     public AudioClip AYSVoiceline;
+
+    public AudioClip footStepsSFX;
+    public AudioClip altFootStepsSFX;
 
     public ScreenFader screenFader;
 
     public UnityEvent onDenyQuit;
 
-
+    void Awake()
+    {
+        if(screenFader == null)
+        {
+            GameObject screenFaderObj = GameObject.FindWithTag("Screen Fade");
+            if(screenFaderObj != null)
+                screenFader = screenFaderObj.GetComponent<ScreenFader>();
+        }
+    }
 
     public void StartCinematic()
     {
@@ -36,6 +48,8 @@ public class QuitGameBehaviour : MonoBehaviour
     IEnumerator QuitCinematic()
     {
         menuCameraController.SetTargetTransform(turnAroundTarget.transform);
+        footStepAudioSource.clip = footStepsSFX;
+        footStepAudioSource.Play();
         yield return null;
         yield return new WaitWhile(() => menuCameraController.isAnimating);
 
@@ -45,16 +59,17 @@ public class QuitGameBehaviour : MonoBehaviour
 
         menuCameraController.SetTargetRotation(new Vector3(0f,193f,0f));
         AreYouSure();
+        footStepAudioSource.Stop();
         yield return new WaitWhile(() => menuCameraController.isAnimating);
     }
 
     void AreYouSure()
     {
         areYouSureAboutThat.SetActive(true);
-        if(audioSource && AYSVoiceline)
+        if(aysAudioSource && AYSVoiceline)
         {
-            audioSource.clip = AYSVoiceline;
-            audioSource.Play();
+            aysAudioSource.clip = AYSVoiceline;
+            aysAudioSource.Play();
         }
     }
 
@@ -62,6 +77,8 @@ public class QuitGameBehaviour : MonoBehaviour
     {
         menuCameraController.SetTargetTransform(leaveTarget.transform);
         screenFader.FadeToBlack(3);
+        footStepAudioSource.clip = footStepsSFX;
+        footStepAudioSource.Play();
         yield return new WaitWhile(() => screenFader.isFading);
         
         Application.Quit();
@@ -75,6 +92,8 @@ public class QuitGameBehaviour : MonoBehaviour
 
     public void DenyQuit()
     {
+        footStepAudioSource.clip = altFootStepsSFX;
+        footStepAudioSource.Play();
         menuCameraController.SetTargetTransform(mainMenuManager.mainTarget.transform);
     }
 }
