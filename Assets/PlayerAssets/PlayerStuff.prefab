@@ -1252,7 +1252,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1963178400475696644, guid: 8545b90b242077b40b56f7753b575624, type: 3}
       propertyPath: attackOrigin
-      value: 1
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1963178400475696644, guid: 8545b90b242077b40b56f7753b575624, type: 3}
+      propertyPath: attackSize.y
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1963178400475696644, guid: 8545b90b242077b40b56f7753b575624, type: 3}
       propertyPath: attackableLayers.m_Bits
@@ -1308,15 +1312,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7668297879549561290, guid: 8545b90b242077b40b56f7753b575624, type: 3}
-      insertIndex: 1
-      addedObject: {fileID: 2327967164846922925}
+      insertIndex: -1
+      addedObject: {fileID: 2205162328574112911}
+    - targetCorrespondingSourceObject: {fileID: 7668297879549561290, guid: 8545b90b242077b40b56f7753b575624, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4471599636452165054}
   m_SourcePrefab: {fileID: 100100000, guid: 8545b90b242077b40b56f7753b575624, type: 3}
 --- !u!1 &181447679260121188 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7668297879549561290, guid: 8545b90b242077b40b56f7753b575624, type: 3}
   m_PrefabInstance: {fileID: 7561515156819186094}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2327967164846922925
+--- !u!114 &2205162328574112911
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1325,21 +1332,39 @@ MonoBehaviour:
   m_GameObject: {fileID: 181447679260121188}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7410bfcefa03c2741bc4b624983a0a81, type: 3}
+  m_Script: {fileID: 11500000, guid: ed26813fdd55a9c44ad6386ba59be475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxStamina: 1
+  currentStamina: 1
+  recoverySpeed: 0.05
+  recoverySpeedBoost: 0.05
+  depletionSpeed: 0.05
+  staminaBar: {fileID: 0}
+--- !u!114 &4471599636452165054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 181447679260121188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4ed7332ef657bf4b9e0afd94c4fee62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   velocity: 5
   sprintAddition: 3.5
-  gravity: 9.8
-  lockRotation: 0
+  gravity: -20
+  lockRotation: 1
   GroundedOffset: -0.14
   GroundedRadius: 0.28
   GroundLayers:
     serializedVersion: 2
-    m_Bits: 0
-  JumpHeight: 1.2
-  JumpTimeout: 0.5
-  FallTimeout: 0.15
+    m_Bits: 65
+  JumpHeight: 65
+  JumpTimeout: 0.05
+  FallTimeout: 0.25
   movementEnabled: 1
 --- !u!4 &706908046243005150 stripped
 Transform:
