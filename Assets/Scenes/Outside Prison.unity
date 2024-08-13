@@ -547,10 +547,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 075c71e3ab66c3848a271cd85a8b3d1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerRadius: 1
   onCompletion:
     m_PersistentCalls:
       m_Calls: []
+  objectiveIndex: 0
+  targetId: 
+  questName: 
+  triggerRadius: 1
 --- !u!114 &596590130 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3198770422892463400, guid: eda8685dbb717fe41a3ebdd3edf8b8cb, type: 3}
@@ -1035,6 +1038,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4471599636452165054, guid: eda8685dbb717fe41a3ebdd3edf8b8cb, type: 3}
+      propertyPath: sprintAddition
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8508275681893437273, guid: eda8685dbb717fe41a3ebdd3edf8b8cb, type: 3}
+      propertyPath: m_TagString
+      value: Objective Text
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 2231481197263523198, guid: eda8685dbb717fe41a3ebdd3edf8b8cb, type: 3}
@@ -1393,6 +1404,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2799338341836083879, guid: 91fb6d2439e76014bbc5eba88661038a, type: 3}
+      propertyPath: billieJean
+      value: 
+      objectReference: {fileID: 8300000, guid: 4da8901fc36feb143b51e2323d8b4187, type: 3}
     - target: {fileID: 2799338341836083879, guid: 91fb6d2439e76014bbc5eba88661038a, type: 3}
       propertyPath: controller
       value: 

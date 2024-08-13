@@ -26,6 +26,7 @@ public class PrisonEntranceCutscene : MonoBehaviour
     public AudioClip doorCloseSFX;
     public AudioClip doorSlamSFX;
     public AudioClip doorHandleSFX;
+    public AudioClip billieJean;
 
 
     void Awake()
@@ -37,7 +38,7 @@ public class PrisonEntranceCutscene : MonoBehaviour
                 screenFader = screenFaderObj.GetComponent<ScreenFader>();
         }
         mainCamera = mainCamera != null ? mainCamera : Camera.main;
-        
+
         secondaryCamera.gameObject.SetActive(false);
     }
 
@@ -60,6 +61,12 @@ public class PrisonEntranceCutscene : MonoBehaviour
         movingObject.position = startingPoint.position;
         movingObject.rotation = startingPoint.rotation;
 
+        if (playerAnimator.GetBool("air"))
+        {
+            movingObject.eulerAngles = new Vector3(movingObject.eulerAngles.x, movingObject.eulerAngles.y + 180, movingObject.eulerAngles.z);
+            AudioSource.PlayClipAtPoint(billieJean, movingObject.position);
+        }
+        
         yield return new WaitForSeconds(0.2f);
         screenFader.FadeIn(1);
         yield return new WaitWhile(() => screenFader.isFading);

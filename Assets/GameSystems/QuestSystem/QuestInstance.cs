@@ -43,7 +43,20 @@ public class QuestInstance
             {
                 objectives[i].status = ObjectiveStatus.Active;
 
-                for (int j = i + 1; j < objectives.Count; j++)
+                ActivateOptionals(i);
+                break;
+            }
+            else if(objectives[i]._status == ObjectiveStatus.Active)
+            {
+                ActivateOptionals(i);
+                break;
+            }
+        }
+    }
+
+    private void ActivateOptionals(int nextObjectiveIndex)
+    {
+        for (int j = nextObjectiveIndex + 1; j < objectives.Count; j++)
                 {
                     if (objectives[j].isOptional)
                     {
@@ -54,9 +67,6 @@ public class QuestInstance
                         break;
                     }
                 }
-                break;
-            }
-        }
     }
 
     public void SkipOptionalObjectives()

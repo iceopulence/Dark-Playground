@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-    
+
     [Header("Player Variables")]
     public GameObject player;
     public Transform playerT { get; private set; }
@@ -36,29 +36,55 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        if(player == null)
+        if (player == null)
         {
             player = GameObject.FindWithTag("Player");
         }
 
         audioSource = GetComponent<AudioSource>();
-        
-        playerCC = player.GetComponent<CharacterController>();
-        playerController = player.GetComponent<ThirdPersonController>();
-        playerInteraction = player.GetComponent<PlayerInteraction>();
-        playerT = player.transform;
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        InitPlayer();
+    }
+
+    void InitPlayer()
+    {
+        if (player == null)
+        {
+            player = GameObject.FindWithTag("Player");
+        }
+
+        if (player != null)
+        {
+            playerCC = player.GetComponent<CharacterController>();
+            playerController = player.GetComponent<ThirdPersonController>();
+            playerInteraction = player.GetComponent<PlayerInteraction>();
+            playerT = player.transform;
+        }
+        if (objectiveText == null)
+        {
+            GameObject.FindWithTag("Objective Text");
+        }
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if(objectiveText.alpha > nonActiveAlphaValue)
+        if (objectiveText.alpha > nonActiveAlphaValue)
         {
             objectiveText.alpha -= Time.deltaTime * textFadeOutSpeed;
             if (objectiveText.alpha < nonActiveAlphaValue)
@@ -80,7 +106,7 @@ public class GameManager : MonoBehaviour
     //     FirstPersonController.PlayerState state = enabled ? FirstPersonController.PlayerState.Movement : FirstPersonController.PlayerState.Disabled;
 
     //     Player.Instance.SetState(state);
-        
+
     //     if(playerCC != null){playerCC.enabled = enabled;}
     //     if(playerInteraction != null){playerInteraction.enabled = enabled;}
     // }
@@ -89,5 +115,5 @@ public class GameManager : MonoBehaviour
     // {
     //     pauseMenu.SetPauseEnabled(enabled);
     // }
-    
+
 }

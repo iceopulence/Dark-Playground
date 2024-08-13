@@ -13,7 +13,12 @@ MonoBehaviour:
   m_Name: Metal
   m_EditorClassIdentifier: 
   footstepSounds:
-  - {fileID: 8300000, guid: 9db560267cc335549afcac900de6bc61, type: 3}
+  - {fileID: 8300000, guid: 9d5958ad65c69324ba301eedac5598a9, type: 3}
+  - {fileID: 8300000, guid: 14ce1700f67040c42912ac76a5332e3f, type: 3}
+  - {fileID: 8300000, guid: 52dc7cc38a7b10d4eb091b778d662cab, type: 3}
+  - {fileID: 8300000, guid: 111ab01789ee5bd4f8f9f57ccb2d78e3, type: 3}
+  - {fileID: 8300000, guid: f1c05ea7f01e0ca458be530ad84f33b3, type: 3}
+  - {fileID: 8300000, guid: 60bda41cc5159f042b1d70d6c21d0ed8, type: 3}
   groundTypeID: 1
   footstepVolume: 0.3
   pitchOffset: 0
