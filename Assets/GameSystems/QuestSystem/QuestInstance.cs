@@ -95,26 +95,43 @@ public class QuestInstance
 
 public class QuestInstanceObjective
 {
+    public delegate void StatusChangedHandler(ObjectiveStatus newStatus);
+    public event StatusChangedHandler OnStatusChanged;
+
     public string description;
     public ObjectiveType objectiveType;
-    public ObjectiveStatus status;
+    public ObjectiveStatus _status; // Backing field for the status property
     public bool isOptional;
     public Vector3 location;
     public string sceneName;
     public int requiredItemCount;
     public int currentItemCount;
     public string targetId;
+    public QuestInstanceObjective nextObjective;  // Reference to the next objective
 
     public QuestInstanceObjective(QuestObjective template)
     {
         description = template.description;
         objectiveType = template.objectiveType;
-        status = template.status;
+        _status = template.status; // Initialize the backing field, not the property
         isOptional = template.isOptional;
         location = template.location;
         sceneName = template.sceneName;
         requiredItemCount = template.requiredItemCount;
         currentItemCount = template.currentItemCount;
         targetId = template.targetId;
+    }
+
+    public ObjectiveStatus status
+    {
+        get => _status;
+        set
+        {
+            if (_status != value)
+            {
+                _status = value;
+                OnStatusChanged?.Invoke(_status);
+            }
+        }
     }
 }

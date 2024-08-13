@@ -1,18 +1,22 @@
 using UnityEngine;
 
-public class CollectibleQuestItem : MonoBehaviour
+public class CollectibleQuestItem : QuestTrigger
 {
-    public Color gizmoColor = new Color(1f,1f, 0, 0.5f);
-
+    public Color gizmoColor = new Color(1f, 1f, 0, 0.5f);
     [SerializeField] public string itemId;  // Ensure this field is public
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            EventManager.TriggerEvent(GameEventType.ItemCollected, itemId);
+            TriggerEvent();
             Destroy(gameObject);
         }
+    }
+
+    protected override void TriggerEvent()
+    {
+        EventManager.TriggerEvent(GameEventType.ItemCollected, itemId);
     }
 
     void OnDrawGizmos()

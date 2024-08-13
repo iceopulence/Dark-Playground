@@ -14,6 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questName: Get the thingy
   questDescription: find the thingy behind the mutilated fish bucket
-  objectives: []
+  objectives:
+  - description: Reach the GameObject
+    objectiveType: 0
+    status: 1
+    isOptional: 0
+    location: {x: -21.33, y: -3.92, z: 0.99}
+    sceneName: Inside Prison
+    requiredItemCount: 1
+    currentItemCount: 0
+    targetId: GameObject
+  - description: Reach the GameObject (1)
+    objectiveType: 0
+    status: 0
+    isOptional: 0
+    location: {x: -58.26, y: -3.92, z: 0.9899998}
+    sceneName: Inside Prison
+    requiredItemCount: 1
+    currentItemCount: 0
+    targetId: GameObject (1)
   status: 1
   linkedQuest: {fileID: 0}

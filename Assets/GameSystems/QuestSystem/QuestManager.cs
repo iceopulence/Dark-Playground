@@ -72,37 +72,51 @@ public class QuestManager : MonoBehaviour
         foreach (var nodeData in questContainer.questNodeData)
         {
             var quest = new QuestInstance(new Quest { questName = nodeData.questName, questDescription = nodeData.questDescription });
-            foreach (var link in questContainer.nodeLinks)
+            QuestInstanceObjective lastObjective = null;
+            foreach (var link in questContainer.nodeLinks.Where(l => l.baseNodeGuid == nodeData.GUID))
             {
-                if (link.baseNodeGuid == nodeData.GUID)
+                var targetObjectiveData = questContainer.objectiveNodeData.FirstOrDefault(o => o.GUID == link.targetNodeGuid);
+                if (targetObjectiveData != null)
                 {
-                    var targetObjectiveData = questContainer.objectiveNodeData.FirstOrDefault(o => o.GUID == link.targetNodeGuid);
-                    if (targetObjectiveData != null)
+                    var newObjective = new QuestInstanceObjective(new QuestObjective(targetObjectiveData.objectiveType)
                     {
-                        quest.objectives.Add(new QuestInstanceObjective(new QuestObjective(targetObjectiveData.objectiveType)
-                        {
-                            description = targetObjectiveData.objectiveDescription,
-                            objectiveType = targetObjectiveData.objectiveType,
-                            isOptional = targetObjectiveData.isOptional,
-                            targetId = targetObjectiveData.targetId,
-                            status = ObjectiveStatus.Hidden,
-                            requiredItemCount = targetObjectiveData.objectiveType == ObjectiveType.Item ? 1 : 0,
-                            currentItemCount = 0,
-                            location = targetObjectiveData.targetTransform != null ? targetObjectiveData.targetTransform.position : Vector3.zero // Use transform position
-                        }));
+                        description = targetObjectiveData.objectiveDescription,
+                        objectiveType = targetObjectiveData.objectiveType,
+                        isOptional = targetObjectiveData.isOptional,
+                        targetId = targetObjectiveData.targetId,
+                        status = ObjectiveStatus.Hidden,
+                        requiredItemCount = targetObjectiveData.objectiveType == ObjectiveType.Item ? 1 : 0,
+                        currentItemCount = 0,
+                        location = targetObjectiveData.targetTransform != null ? targetObjectiveData.targetTransform.position : Vector3.zero
+                    });
+                    if (lastObjective != null)
+                    {
+                        lastObjective.nextObjective = newObjective; // Linking objectives
                     }
+                    lastObjective = newObjective;
+                    quest.objectives.Add(newObjective);
 
-                    var targetQuestData = questContainer.questNodeData.FirstOrDefault(q => q.GUID == link.targetNodeGuid);
-                    if (targetQuestData != null)
-                    {
-                        quest.nextQuestGUID = targetQuestData.GUID;
-                    }
+                    // Assign Triggers for this Objective
+                    AssignTriggers(newObjective, quest);
                 }
             }
-
             activeQuests.Add(quest);
             quest.RevealNextObjective();
-            UpdateObjectiveText(quest);
+        }
+    }
+
+    private void AssignTriggers(QuestInstanceObjective objective, QuestInstance quest)
+    {
+        var triggers = FindObjectsOfType<QuestTrigger>();
+        foreach (var trigger in triggers)
+        {
+            print(trigger.targetId + " help " + objective.targetId);
+            if (trigger.targetId == objective.targetId) // Ensure your triggers have a targetId field that matches the objective's targetId
+            {
+                trigger.questInstance = quest;
+                trigger.objectiveIndex = quest.objectives.IndexOf(objective);
+                trigger.SubscribeToObjectiveStatus(); // This method should manage trigger activation based on objective status
+            }
         }
     }
 
@@ -125,7 +139,8 @@ public class QuestManager : MonoBehaviour
                         StartNextQuest(nextQuestData);
                     }
                 }
-                else{
+                else
+                {
                     GameManager.Instance.UpdateObjectiveText("");
                 }
             }
@@ -176,7 +191,17 @@ public class QuestManager : MonoBehaviour
     {
         var quest = new QuestInstance(questTemplate);
         activeQuests.Add(quest);
+        quest.RevealNextObjective();
+        SetupQuestObjectives(quest);
         UpdateObjectiveText(quest);
+    }
+
+    private void SetupQuestObjectives(QuestInstance quest)
+    {
+        foreach (var objective in quest.objectives)
+        {
+            AssignTriggers(objective, quest);
+        }
     }
 
     public QuestInstance GetQuest(string questName)
@@ -254,6 +279,60 @@ public class QuestManager : MonoBehaviour
         }
     }
 
+    private void HandleObjectiveStatusChange(QuestInstanceObjective objective, ObjectiveStatus status)
+    {
+        // Depending on the game design, you may need references to triggers or other components that respond to the objective status
+        switch (status)
+        {
+            case ObjectiveStatus.Active:
+                // Activate the trigger or UI related to this objective
+                ActivateTrigger(objective);
+                break;
+            case ObjectiveStatus.Completed:
+                // Deactivate the trigger or update UI as the objective is completed
+                DeactivateTrigger(objective);
+                break;
+            case ObjectiveStatus.Skipped:
+                // Handle skipping of the objective, possibly deactivating or ignoring triggers
+                DeactivateTrigger(objective);
+                break;
+            default:
+                // For hidden or other statuses, ensure that triggers are not active
+                DeactivateTrigger(objective);
+                break;
+        }
+    }
+
+    private void ActivateTrigger(QuestInstanceObjective objective)
+    {
+        // Logic to find and activate the game object or UI element linked to this objective
+        // For example, enabling a collider or making an interactable object visible
+        GameObject triggerObject = FindTriggerObjectByObjectiveId(objective.targetId);
+        if (triggerObject != null)
+        {
+            triggerObject.SetActive(true);
+        }
+    }
+
+    private void DeactivateTrigger(QuestInstanceObjective objective)
+    {
+        // Logic to find and deactivate the game object or UI element linked to this objective
+        // For example, disabling a collider or making an interactable object non-visible
+        GameObject triggerObject = FindTriggerObjectByObjectiveId(objective.targetId);
+        if (triggerObject != null)
+        {
+            triggerObject.SetActive(false);
+        }
+    }
+
+    private GameObject FindTriggerObjectByObjectiveId(string targetId)
+    {
+        // Implement logic to find the appropriate game object based on the targetId of the objective
+        // This might involve searching through a list or using a dictionary if you keep a registry of triggers
+        return GameObject.Find(targetId); // Example using GameObject.Find which you should avoid in production
+    }
+
+
     public void CompleteObjective(QuestInstance quest, QuestInstanceObjective objective)
     {
         objective.status = ObjectiveStatus.Completed;
@@ -279,6 +358,7 @@ public class QuestManager : MonoBehaviour
             UpdateObjectiveText(quest);
         }
     }
+
 
     private void UpdateObjectiveText(QuestInstance quest)
     {

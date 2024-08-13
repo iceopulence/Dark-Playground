@@ -1,12 +1,9 @@
 using UnityEngine;
-using UnityEngine.Events;
 
-public class QuestLocationTrigger : MonoBehaviour
+public class QuestLocationTrigger : QuestTrigger
 {
     private Transform playerT;
     [SerializeField] private float triggerRadius = 1f;
-
-    public UnityEvent onCompletion;
 
     void Start()
     {
@@ -17,18 +14,20 @@ public class QuestLocationTrigger : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, playerT.position) <= triggerRadius)
         {
-            EventManager.TriggerEvent(GameEventType.LocationReached, transform.position);
-            onCompletion.Invoke();
-
-            enabled = false;
+            TriggerEvent();
+            Complete();
         }
+    }
+
+    protected override void TriggerEvent()
+    {
+        EventManager.TriggerEvent(GameEventType.LocationReached, transform.position);
     }
 
     void OnDrawGizmos()
     {
         Color gizmoCol = Color.white;
         gizmoCol.a = 0.5f;
-
         Gizmos.DrawSphere(transform.position, triggerRadius);
     }
 }

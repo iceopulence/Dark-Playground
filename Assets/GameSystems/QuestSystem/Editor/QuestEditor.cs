@@ -34,58 +34,7 @@ public class QuestEditor : Editor
 
         if (GUILayout.Button("Add Objective"))
         {
-            if (objectiveTransform != null)
-            {
-                string objectiveID = objectiveTransform.gameObject.name;
-                QuestObjective newObjective = new QuestObjective(objectiveType)
-                {
-                    description = GetObjectiveDescription(objectiveType, objectiveTransform.gameObject.name),
-                    location = objectiveTransform != null ? objectiveTransform.position : Vector3.zero,
-                    sceneName = objectiveTransform != null ? objectiveTransform.gameObject.scene.name : "",
-                    status = objectiveStatus,
-                    isOptional = isOptional,
-                    requiredItemCount = requiredItemCount,
-                    targetId = objectiveID
-                };
-
-                if (objectiveType == ObjectiveType.Item)
-                {
-                    CollectibleQuestItem collectibleItem = objectiveTransform.GetComponent<CollectibleQuestItem>();
-                    if (collectibleItem == null)
-                    {
-                        collectibleItem = objectiveTransform.gameObject.AddComponent<CollectibleQuestItem>();
-                        collectibleItem.itemId = objectiveID;
-                        Debug.Log("Added collectible quest item component to " + objectiveTransform.gameObject.name + " with ID: " + collectibleItem.itemId);
-                    }
-                    collectibleItem.itemId = objectiveID;
-                }
-                else if(objectiveType == ObjectiveType.Interactable)
-                {
-                    var interactableObjective = objectiveTransform.GetComponent<QuestInteractable>();
-                    if (interactableObjective == null)
-                    {
-                        interactableObjective = objectiveTransform.gameObject.AddComponent<QuestInteractable>();
-                        Debug.Log("Added interactable quest object component to " + objectiveTransform.gameObject.name);
-                    }
-                    interactableObjective.itemId = objectiveID;
-                }
-                else if(objectiveType == ObjectiveType.Location)
-                {
-                    var objectiveLocation = objectiveTransform.GetComponent<QuestLocationTrigger>();
-                    if (objectiveLocation == null)
-                    {
-                        objectiveLocation = objectiveTransform.gameObject.AddComponent<QuestLocationTrigger>();
-                        Debug.Log("Added Location Trigger component to " + objectiveTransform.gameObject.name);
-                    }
-                }
-
-                quest.objectives.Add(newObjective);
-                objectiveTransform = null;
-            }
-            else
-            {
-                EditorUtility.DisplayDialog("Error", "Please assign a Transform.", "OK");
-            }
+            AddObjectiveToQuest(quest);
         }
 
         if (GUILayout.Button("Remove Last Objective"))
@@ -105,6 +54,66 @@ public class QuestEditor : Editor
         }
     }
 
+    private void AddObjectiveToQuest(Quest quest)
+    {
+        if (objectiveTransform != null)
+        {
+            QuestObjective newObjective = CreateObjectiveComponent(quest, objectiveTransform);
+            quest.objectives.Add(newObjective);
+
+            // Instead of linking, store the necessary information
+            StoreConfiguration(quest, newObjective, objectiveTransform);
+
+            objectiveTransform = null; // Reset the transform after adding
+        }
+        else
+        {
+            EditorUtility.DisplayDialog("Error", "Please assign a Transform.", "OK");
+        }
+    }
+
+    private void StoreConfiguration(Quest quest, QuestObjective objective, Transform transform)
+    {
+        QuestTrigger questTrigger = null;
+        // Example assuming you have specific classes for each trigger type
+        switch (objectiveType)
+        {
+            case ObjectiveType.Location:
+                questTrigger = transform.GetComponent<QuestLocationTrigger>() ?? transform.gameObject.AddComponent<QuestLocationTrigger>();
+                break;
+            case ObjectiveType.Item:
+                questTrigger = transform.GetComponent<CollectibleQuestItem>() ?? transform.gameObject.AddComponent<CollectibleQuestItem>();
+                break;
+            // Add other cases as necessary
+            default:
+                Debug.LogError("Unsupported objective type for triggers.");
+                return;
+        }
+
+        if (questTrigger != null)
+        {
+            questTrigger.questName = quest.questName;
+            questTrigger.objectiveIndex = quest.objectives.IndexOf(objective);
+            questTrigger.targetId = objective.targetId;
+        }
+    }
+
+
+    private QuestObjective CreateObjectiveComponent(Quest quest, Transform transform)
+    {
+        // Create and return the new objective based on the current editor fields
+        return new QuestObjective(objectiveType)
+        {
+            description = GetObjectiveDescription(objectiveType, transform.gameObject.name),
+            location = transform.position,
+            sceneName = transform.gameObject.scene.name,
+            status = objectiveStatus,
+            isOptional = isOptional,
+            requiredItemCount = requiredItemCount,
+            targetId = transform.gameObject.name // or `targetId` from editor
+        };
+    }
+
     private string GetObjectiveDescription(ObjectiveType type, string objectiveName)
     {
         switch (type)
@@ -122,7 +131,8 @@ public class QuestEditor : Editor
             case ObjectiveType.Interactable:
                 return "Interact with the " + objectiveName;
             default:
-                return "Objective";
+                return "Complete the objective at " + objectiveName;
         }
     }
+
 }
