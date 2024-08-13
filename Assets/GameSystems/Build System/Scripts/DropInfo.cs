@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "DropInfo", menuName = "GameData/BuildSystem")]
+[CreateAssetMenu(fileName = "DropInfo", menuName = "GameData/BuildSystem/DropInfo")]
 
 public class DropInfo : ScriptableObject
 {

@@ -9,7 +9,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: Door Open
+    m_ConditionEvent: doorOpen
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -6607265028483080150}
@@ -34,7 +34,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: Door Open
+    m_ConditionEvent: doorOpen
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -4388781418761390007}
@@ -162,7 +162,7 @@ AnimatorController:
   m_Name: OutsidePrisonDoor Anim Controll
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: Door Open
+  - m_Name: doorOpen
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0

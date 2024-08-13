@@ -13,6 +13,12 @@ public class ThirdPersonCameraController : MonoBehaviour
     private float _cinemachineTargetPitch;
     private const float _threshold = 0.01f;
 
+    void Awake()
+    {
+        _cinemachineTargetYaw = Camera.main.transform.rotation.eulerAngles.y;
+        _cinemachineTargetPitch = Camera.main.transform.rotation.eulerAngles.x;
+    }
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;

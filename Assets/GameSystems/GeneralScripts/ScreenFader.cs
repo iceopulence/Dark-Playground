@@ -10,10 +10,18 @@ public class ScreenFader : MonoBehaviour
 
     public bool isFading = false;
 
+    public bool fadeInStart = true;
+    public float fadeInStartDuration = 1.5f;
+
     private void Start()
     {
         // Ensure the fade image is fully transparent at start
         SetAlpha(0);
+
+        if(fadeInStart)
+        {
+            FadeIn(fadeInStartDuration);
+        }
     }
 
     public void FadeToBlack(float duration)

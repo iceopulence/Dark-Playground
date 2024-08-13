@@ -23,9 +23,9 @@ public class ThirdPersonController : MonoBehaviour
     public float gravity = 9.8f;
 
     // Player states
-    public bool isJumping {get;private set;}= false;
-    public bool isSprinting {get;private set;}= false;
-    public bool isCrouching {get;private set;}= false;
+    public bool isJumping { get; private set; } = false;
+    public bool isSprinting { get; private set; } = false;
+    public bool isCrouching { get; private set; } = false;
 
     // Inputs
     float inputHorizontal;
@@ -46,16 +46,17 @@ public class ThirdPersonController : MonoBehaviour
     Animator animator;
     bool _hasAnimator;
     int animState = 0;
-    CharacterController cc;
+    [SerializeField] CharacterController cc;
 
     Transform cameraT;
     // Transform cameraParent;
 
     public bool lockRotation = false;
 
+    [SerializeField] float headHitDistance = 0.25f;
     [Header("Player Grounded")]
     [Tooltip("If the character is grounded or not. Not part of the CharacterController built in grounded check")]
-    public bool Grounded {get;private set;}= true;
+    [SerializeField]public bool Grounded { get; private set; } = true;
 
     [Tooltip("Useful for rough ground")]
     public float GroundedOffset = -0.14f;
@@ -82,7 +83,10 @@ public class ThirdPersonController : MonoBehaviour
 
     void Awake()
     {
-        cc = GetComponent<CharacterController>();
+        if(cc == null)
+        {
+            cc = GetComponent<CharacterController>();
+        }
         animator = GetComponent<Animator>();
 
         if (cameraT == null)
@@ -105,6 +109,8 @@ public class ThirdPersonController : MonoBehaviour
     // Update is only being used here to identify keys and trigger animations
     void Update()
     {
+        if (!movementEnabled)
+            return;
         // print(Grounded + " grounded");
         GatherInputs();
 
@@ -123,7 +129,6 @@ public class ThirdPersonController : MonoBehaviour
             //isCrouching = false; 
         }
 
-        HeadHittingDetect();
         HandleWeaponSelect();
         RotateCharacter();
         Movement();
@@ -132,7 +137,10 @@ public class ThirdPersonController : MonoBehaviour
     // With the inputs and animations defined, FixedUpdate is responsible for applying movements and actions to the player
     private void FixedUpdate()
     {
+        if (!movementEnabled)
+            return;
         JumpAndGravity();
+        HeadHittingDetect();
     }
 
     private void RotateCharacter()
@@ -190,13 +198,6 @@ public class ThirdPersonController : MonoBehaviour
             // reset the fall timeout timer
             _fallTimeoutDelta = FallTimeout;
 
-            // update animator if using character
-            // if (_hasAnimator)
-            // {
-            //     _animator.SetBool(_animIDJump, false);
-            //     _animator.SetBool(_animIDFreeFall, false);
-            // }
-
             // stop our velocity dropping infinitely when grounded
             if (verticalDirection < 0.0f)
             {
@@ -209,11 +210,6 @@ public class ThirdPersonController : MonoBehaviour
                 // the square root of H * -2 * G = how much velocity needed to reach desired height
                 verticalDirection = Mathf.Sqrt(JumpHeight * 2f);
 
-                // update animator if using character
-                // if (_hasAnimator)
-                // {
-                //     _animator.SetBool(_animIDJump, true);
-                // }
             }
 
             // jump timeout
@@ -294,7 +290,7 @@ public class ThirdPersonController : MonoBehaviour
         {
             animator.SetBool("air", Grounded == false && _fallTimeoutDelta < 0.0f);
         }
-            
+
     }
 
     private void GroundedCheck()
@@ -311,16 +307,12 @@ public class ThirdPersonController : MonoBehaviour
     //This function makes the character end his jump if he hits his head on something
     void HeadHittingDetect()
     {
-        float headHitDistance = 1.1f;
         Vector3 ccCenter = transform.TransformPoint(cc.center);
         float hitCalc = cc.height / 2f * headHitDistance;
 
-        // Uncomment this line to see the Ray drawed in your characters head
-        // Debug.DrawRay(ccCenter, Vector3.up * headHeight, Color.red);
-
         if (Physics.Raycast(ccCenter, Vector3.up, hitCalc, GroundLayers))
         {
-            verticalDirection = 0;
+            verticalDirection = gravity * Time.deltaTime;
         }
     }
 
@@ -332,6 +324,20 @@ public class ThirdPersonController : MonoBehaviour
         }
     }
 
+    public void DeactivateControls()
+    {
+        cc.enabled = false;
+        movementEnabled = false;
+        animator.SetFloat("speedZ", 0f);
+        animator.SetFloat("speedX", 0f);
+    }
+
+    public void ActivateControls()
+    {
+        cc.enabled = true;
+        movementEnabled = true;
+    }
+
     private void OnDrawGizmosSelected()
     {
         Color transparentGreen = new Color(0.0f, 1.0f, 0.0f, 0.35f);
@@ -340,9 +346,21 @@ public class ThirdPersonController : MonoBehaviour
         if (Grounded) Gizmos.color = transparentGreen;
         else Gizmos.color = transparentRed;
 
-        // when selected, draw a gizmo in the position of, and matching radius of, the grounded collider
+        // Draw a sphere at the grounded check location
         Gizmos.DrawSphere(
             new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z),
             GroundedRadius);
+
+        // Draw the head hit detection raycast
+        if (cc != null)
+        {
+            Vector3 ccCenter = transform.TransformPoint(cc.center);
+            float hitCalc = cc.height / 2f * headHitDistance;
+
+            Gizmos.color = Color.blue;
+            Gizmos.DrawLine(ccCenter, ccCenter + Vector3.up * hitCalc);
+            Gizmos.DrawWireSphere(ccCenter + Vector3.up * hitCalc, 0.1f);  // Optional: Draw a small sphere at the endpoint
+        }
     }
+
 }

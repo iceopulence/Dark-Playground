@@ -34,7 +34,7 @@ public class QuestEditor : Editor
 
         if (GUILayout.Button("Add Objective"))
         {
-            if (objectiveTransform != null || objectiveType == ObjectiveType.Location)
+            if (objectiveTransform != null)
             {
                 string objectiveID = objectiveTransform.gameObject.name;
                 QuestObjective newObjective = new QuestObjective(objectiveType)
@@ -65,9 +65,18 @@ public class QuestEditor : Editor
                     if (interactableObjective == null)
                     {
                         interactableObjective = objectiveTransform.gameObject.AddComponent<QuestInteractable>();
-                        Debug.Log("Added collectible quest item component to " );
+                        Debug.Log("Added interactable quest object component to " + objectiveTransform.gameObject.name);
                     }
                     interactableObjective.itemId = objectiveID;
+                }
+                else if(objectiveType == ObjectiveType.Location)
+                {
+                    var objectiveLocation = objectiveTransform.GetComponent<QuestLocationTrigger>();
+                    if (objectiveLocation == null)
+                    {
+                        objectiveLocation = objectiveTransform.gameObject.AddComponent<QuestLocationTrigger>();
+                        Debug.Log("Added Location Trigger component to " + objectiveTransform.gameObject.name);
+                    }
                 }
 
                 quest.objectives.Add(newObjective);

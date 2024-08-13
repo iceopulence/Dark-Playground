@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 492cb914efa1d2443bc33b0e3e9bef15, type: 3}
+  m_Name: Concrete
+  m_EditorClassIdentifier: 
+  footstepSounds:
+  - {fileID: 8300000, guid: 6d5e996944e161f45b1fb7cb2b439ebe, type: 3}
+  - {fileID: 8300000, guid: 2b27e0dc007851c4a895f6eeacb5a0f9, type: 3}
+  - {fileID: 8300000, guid: a1ba162ad9e7a1b45b1fa8ae736cf522, type: 3}
+  - {fileID: 8300000, guid: 1eb24727b6da4b447a505b7e4d960b20, type: 3}
+  - {fileID: 8300000, guid: 3aa90ac6412507345929e756de5457da, type: 3}
+  - {fileID: 8300000, guid: eb9c55c8440420f4d8bab6ac3ca4ed22, type: 3}
+  - {fileID: 8300000, guid: 8f050067bf0e2d648bc26ff215a9e88d, type: 3}
+  - {fileID: 8300000, guid: 95ebcaa001d4c4e4fada42e42ecc15d2, type: 3}
+  - {fileID: 8300000, guid: e6a4af9d81942314aaaebde5cd3075bd, type: 3}
+  groundTypeID: 0
+  footstepVolume: 0.1
