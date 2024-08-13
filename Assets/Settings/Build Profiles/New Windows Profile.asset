@@ -22,6 +22,8 @@ MonoBehaviour:
     m_path: Assets/Scenes/Main Menu.unity
   - m_enabled: 1
     m_path: Assets/Scenes/Outside Prison.unity
+  - m_enabled: 1
+    m_path: Assets/Scenes/Inside Prison.unity
   m_ScriptingDefines: []
   m_PlayerSettingsYaml:
     m_Settings: []

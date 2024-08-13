@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            Instance.player = this.player;
             Destroy(this.gameObject);
         }
 

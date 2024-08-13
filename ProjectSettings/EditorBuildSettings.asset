@@ -4,5 +4,15 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Main Menu.unity
+    guid: 671a895d819433746b72aeec8310e536
+  - enabled: 1
+    path: Assets/Scenes/Outside Prison.unity
+    guid: 5a109519aee68664e8d485ddf05ac737
+  - enabled: 1
+    path: Assets/Scenes/Inside Prison.unity
+    guid: 4b31e041d03dfdc4c914af4f2a8b94ef
   m_configObjects: {}
+  m_UseUCBPForAssetBundles: 0
