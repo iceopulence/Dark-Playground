@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using Cinemachine;
 
 [RequireComponent(typeof(AudioSource))]
 public class GameManager : MonoBehaviour
@@ -15,6 +16,9 @@ public class GameManager : MonoBehaviour
     ThirdPersonController playerController;
     CharacterController playerCC;
     PlayerInteraction playerInteraction;
+
+    [SerializeField] CinemachineBrain cinemachineBrain;
+    [SerializeField] CinemachineVirtualCamera virtualCamera;
 
     [Space]
     [SerializeField] PauseMenu pauseMenu;
@@ -32,18 +36,15 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Instance.player = this.player;
             Destroy(this.gameObject);
         }
 
-        if (player == null)
-        {
-            player = GameObject.FindWithTag("Player");
-        }
-
+        InitPlayer();
         audioSource = GetComponent<AudioSource>();
 
         SceneManager.sceneLoaded += OnSceneLoaded;
+
+        print("ran awake on GameManager");
     }
 
     private void OnDestroy()
@@ -54,6 +55,7 @@ public class GameManager : MonoBehaviour
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         InitPlayer();
+        print("ran on sceneloaded on GameManager");
     }
 
     void InitPlayer()
@@ -65,21 +67,18 @@ public class GameManager : MonoBehaviour
 
         if (player != null)
         {
-            playerCC = player.GetComponent<CharacterController>();
-            playerController = player.GetComponent<ThirdPersonController>();
-            playerInteraction = player.GetComponent<PlayerInteraction>();
+            playerCC = !playerCC ? player.GetComponent<CharacterController>() : playerCC;
+            playerController = !playerController ? player.GetComponent<ThirdPersonController>() : playerController;
+            playerInteraction = !playerInteraction ? player.GetComponent<PlayerInteraction>() : playerInteraction;
             playerT = player.transform;
         }
+        Transform levelSpawn = GameObject.FindWithTag("Respawn").transform;
+        TeleportPlayer(levelSpawn.position, levelSpawn.rotation);
+
         if (objectiveText == null)
         {
             GameObject.FindWithTag("Objective Text");
         }
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
     }
 
     void Update()
@@ -99,6 +98,28 @@ public class GameManager : MonoBehaviour
         print("tried to update objective to " + text);
         objectiveText.text = text;
         objectiveText.alpha = 1f;
+    }
+
+    public void TeleportPlayer(Vector3 newPos, Quaternion newRot)
+    {
+
+        // Notify the virtual camera about the player's new position
+        virtualCamera = GameObject.FindWithTag("annoying thing").GetComponent<CinemachineVirtualCamera>();
+        virtualCamera.OnTargetObjectWarped(playerT, newPos - playerT.position);
+        virtualCamera.ForceCameraPosition(newPos, newRot);
+        virtualCamera.PreviousStateIsValid = false;
+        
+        // Disable character controller for teleportation
+        playerCC.enabled = false;
+
+        // Teleport the player to the skip location
+        playerCC.transform.position = newPos;
+        playerCC.transform.rotation = newRot;
+
+
+
+        // Re-enable character controller
+        playerCC.enabled = true;
     }
 
     // public void SetPlayerControlsEnabled(bool enabled)

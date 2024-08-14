@@ -34,7 +34,7 @@ public class PlayerInteraction : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit, interactionDistance, interactableLayer))
             {
-                print("maybe ill be tracer");
+                // print("maybe ill be tracer");
                 if (_lastHitTransform == null || _lastHitTransform != hit.transform)
                 {
                     _lastHitTransform = hit.transform;
@@ -47,10 +47,10 @@ public class PlayerInteraction : MonoBehaviour
                 if (Input.GetKeyDown(interactKey))
                 {
                     IInteractable interactableObject = hit.collider.GetComponent<IInteractable>();
-                    print("Im already tracer");
+                    // print("Im already tracer");
                     if (interactableObject != null)
                     {
-                        print("what about widdowmaker");
+                        // print("what about widdowmaker");
                         interactableObject.OnInteract();
                     }
                 }

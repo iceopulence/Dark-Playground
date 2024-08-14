@@ -190,6 +190,10 @@ public class QuestManager : MonoBehaviour
     public void AddQuest(Quest questTemplate)
     {
         var quest = new QuestInstance(questTemplate);
+        if(activeQuests == null)
+        {
+            activeQuests = new List<QuestInstance>();
+        }
         activeQuests.Add(quest);
         quest.RevealNextObjective();
         SetupQuestObjectives(quest);

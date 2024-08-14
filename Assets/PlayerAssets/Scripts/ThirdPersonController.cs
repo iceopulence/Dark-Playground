@@ -81,6 +81,8 @@ public class ThirdPersonController : MonoBehaviour
 
     public bool movementEnabled = true;
 
+    public bool testing = false;
+
     void Awake()
     {
         if(cc == null)
@@ -102,7 +104,8 @@ public class ThirdPersonController : MonoBehaviour
         if (!_hasAnimator)
             Debug.LogWarning("Hey buddy, you don't have the Animator component in your player. Without it, the animations won't work.");
 
-
+        if(testing)
+            sprintAddition = 60;
     }
 
 

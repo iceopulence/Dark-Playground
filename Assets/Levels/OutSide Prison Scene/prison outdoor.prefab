@@ -40,6 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1607351131459813014}
+  - component: {fileID: 2489388947173431231}
   m_Layer: 7
   m_Name: StartPosition
   m_TagString: Untagged
@@ -62,6 +63,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3164652331722652006}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!114 &2489388947173431231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3442472783127972521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 075c71e3ab66c3848a271cd85a8b3d1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onCompletion:
+    m_PersistentCalls:
+      m_Calls: []
+  objectiveIndex: 0
+  targetId: 
+  questName: 
+  triggerRadius: 1
 --- !u!1 &5670395489414240630
 GameObject:
   m_ObjectHideFlags: 0
@@ -1097,6 +1117,7 @@ MonoBehaviour:
   doorCloseSFX: {fileID: 8300000, guid: 7bcfe46ea8b17124ebaef518f8eef0d5, type: 3}
   doorSlamSFX: {fileID: 8300000, guid: 6d4121b0859c6774eb4f0530d63b2fd2, type: 3}
   doorHandleSFX: {fileID: 8300000, guid: 1b97a37cfb223304baf6946034d0c66a, type: 3}
+  billieJean: {fileID: 8300000, guid: 4da8901fc36feb143b51e2323d8b4187, type: 3}
 --- !u!1 &4365589541629752659 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -8380157826906577798, guid: 71cab6690c3b2ff4eaa6bef9266fa62a, type: 3}

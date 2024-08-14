@@ -29,22 +29,48 @@ public class PrisonEntranceCutscene : MonoBehaviour
     public AudioClip billieJean;
 
 
+    public bool testing = false;
+
     void Awake()
     {
+        // Initialize screenFader if it's null
         if (screenFader == null)
         {
             GameObject screenFaderObj = GameObject.FindWithTag("Screen Fade");
             if (screenFaderObj != null)
                 screenFader = screenFaderObj.GetComponent<ScreenFader>();
         }
+
+        // Initialize the main camera if it's not already set
         mainCamera = mainCamera != null ? mainCamera : Camera.main;
 
+        // Disable the secondary camera at the start
         secondaryCamera.gameObject.SetActive(false);
+
+
+        // Populate related variables
+        if (movingObject == null || playerAnimator == null || controller == null)
+        {
+            // Get the player object from the GameManager instance
+            GameObject playerObject = GameManager.Instance.player;
+
+            movingObject = playerObject.transform;
+            playerAnimator = playerObject.GetComponent<Animator>();
+            controller = playerObject.GetComponent<ThirdPersonController>();
+        }
     }
 
     public void StartCutscene()
     {
-        StartCoroutine(ActionSequence());
+        if(testing)
+        {
+            //load next scene
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+        else
+        {
+            StartCoroutine(ActionSequence());
+        }
     }
 
     private IEnumerator ActionSequence()
@@ -66,7 +92,7 @@ public class PrisonEntranceCutscene : MonoBehaviour
             movingObject.eulerAngles = new Vector3(movingObject.eulerAngles.x, movingObject.eulerAngles.y + 180, movingObject.eulerAngles.z);
             AudioSource.PlayClipAtPoint(billieJean, movingObject.position);
         }
-        
+
         yield return new WaitForSeconds(0.2f);
         screenFader.FadeIn(1);
         yield return new WaitWhile(() => screenFader.isFading);
@@ -112,6 +138,8 @@ public class PrisonEntranceCutscene : MonoBehaviour
 
         // load next scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+
+        mainCamera.gameObject.SetActive(true);
     }
 
     //handled by anim event
