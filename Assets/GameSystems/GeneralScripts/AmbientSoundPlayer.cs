@@ -14,6 +14,14 @@ public class AmbientSoundPlayer : MonoBehaviour
     public bool isRandomSegmentMode = false; // Switch between modes
     public float minDuration = 1.0f; // Minimum duration for a segment
     public float maxDuration = 5.0f; // Maximum duration for a segment
+    
+    void Awake()
+    {
+        if (player == null)
+        {
+            player = GameManager.Instance.player.transform;
+        }
+    }
 
     void Start()
     {

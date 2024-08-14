@@ -10,6 +10,7 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private Image interactionIndicator;
 
     private Transform _lastHitTransform;
+    [SerializeField] private Camera mainCam;
 
     void Start()
     {
@@ -17,43 +18,64 @@ public class PlayerInteraction : MonoBehaviour
         {
             interactionIndicator.enabled = false;
         }
+        mainCam = Camera.main;
+        if (mainCam == null)
+        {
+            Debug.LogError("Main camera is not set or found.");
+        }
     }
 
     void Update()
     {
-        RaycastHit hit;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        if (Physics.Raycast(ray, out hit, interactionDistance, interactableLayer))
+        if (mainCam != null)
         {
-            if (_lastHitTransform == null || _lastHitTransform != hit.transform)
+            RaycastHit hit;
+            Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit, interactionDistance, interactableLayer))
             {
-                _lastHitTransform = hit.transform;
-                if (interactionIndicator != null)
+                print("maybe ill be tracer");
+                if (_lastHitTransform == null || _lastHitTransform != hit.transform)
                 {
-                    interactionIndicator.enabled = true;
+                    _lastHitTransform = hit.transform;
+                    if (interactionIndicator != null)
+                    {
+                        interactionIndicator.enabled = true;
+                    }
+                }
+
+                if (Input.GetKeyDown(interactKey))
+                {
+                    IInteractable interactableObject = hit.collider.GetComponent<IInteractable>();
+                    print("Im already tracer");
+                    if (interactableObject != null)
+                    {
+                        print("what about widdowmaker");
+                        interactableObject.OnInteract();
+                    }
                 }
             }
-
-            if (Input.GetKeyDown(interactKey))
+            else
             {
-                IInteractable interactableObject = hit.collider.GetComponent<IInteractable>();
-                if (interactableObject != null)
+                if (_lastHitTransform != null)
                 {
-                    interactableObject.OnInteract();
+                    _lastHitTransform = null;
+                    if (interactionIndicator != null)
+                    {
+                        interactionIndicator.enabled = false;
+                    }
                 }
             }
         }
-        else
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        if (mainCam != null)
         {
-            if (_lastHitTransform != null)
-            {
-                _lastHitTransform = null;
-                if (interactionIndicator != null)
-                {
-                    interactionIndicator.enabled = false;
-                }
-            }
+            Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
+            Gizmos.color = Color.green;
+            Gizmos.DrawLine(ray.origin, ray.origin + ray.direction * interactionDistance);
         }
     }
 }
