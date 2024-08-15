@@ -695,9 +695,6 @@ PrefabInstance:
       addedObject: {fileID: 2107630630}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: aeeda40bbddbaf043bb40969e9d69a4c, type: 3}
-      insertIndex: 1
-      addedObject: {fileID: 399091824}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: aeeda40bbddbaf043bb40969e9d69a4c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 399091820}
   m_SourcePrefab: {fileID: 100100000, guid: aeeda40bbddbaf043bb40969e9d69a4c, type: 3}
@@ -813,21 +810,6 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: aeeda40bbddbaf043bb40969e9d69a4c, type: 3}
   m_PrefabInstance: {fileID: 399091818}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &399091824
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 399091819}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8805bd191f5b5de46b311118bd34e820, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 399091822}
-  minWaitTime: 3
-  maxWaitTime: 10
 --- !u!1001 &402167977
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2099,6 +2081,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraOffset: {x: 0, y: 0, z: 0}
   smoothTime: 3.5
+  positionThreshold: 0.5
+  rotationThreshold: 1
   isAnimating: 0
 --- !u!114 &749924469
 MonoBehaviour:

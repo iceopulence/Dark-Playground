@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class ScreenFader : MonoBehaviour
 {
+    public static ScreenFader Instance { get; private set; }
     public Image fadeImage;
     public UnityEvent onFadeComplete;
 
@@ -16,20 +17,29 @@ public class ScreenFader : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+
         // Ensure the fade image is fully transparent at start
         SetAlpha(0);
 
         if (fadeInStart)
         {
             FadeIn(fadeInStartDuration);
-            SceneManager.sceneLoaded += OnSceneLoaded;
+            // SceneManager.sceneLoaded += OnSceneLoaded;
         }
     }
 
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        FadeIn(fadeInStartDuration);
-    }
+    // void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    // {
+    //     FadeIn(fadeInStartDuration);
+    // }
 
     public void FadeToBlack(float duration)
     {

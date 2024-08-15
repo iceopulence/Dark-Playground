@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cb56611815d6c643aa2f5b2dbce4c79, type: 3}
+  m_Name: Explore The Prison
+  m_EditorClassIdentifier: 
+  questName: Explore The Prison
+  questDescription: See whats in here
+  objectives:
+  - description: Have a look around
+    objectiveType: 1
+    status: 1
+    isOptional: 0
+    location: {x: -6.93, y: -0.33, z: 6.68}
+    sceneName: Inside Prison
+    requiredItemCount: 1
+    currentItemCount: 0
+    targetId: DandidTrigger
+  - description: Reach the SoapLocation
+    objectiveType: 0
+    status: 0
+    isOptional: 0
+    location: {x: 28.939, y: -1.696, z: 9.14}
+    sceneName: Inside Prison
+    requiredItemCount: 1
+    currentItemCount: 0
+    targetId: SoapLocation
+  status: 0
+  linkedQuest: {fileID: 0}

@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     ThirdPersonController playerController;
     CharacterController playerCC;
     PlayerInteraction playerInteraction;
+    public AnimationController playerAnimController;
 
     [SerializeField] CinemachineBrain cinemachineBrain;
     [SerializeField] CinemachineVirtualCamera virtualCamera;
@@ -26,6 +27,8 @@ public class GameManager : MonoBehaviour
     private const float nonActiveAlphaValue = 0.7f;
     public float textFadeOutSpeed = 0.5f;
     public AudioSource audioSource { get; private set; }
+
+    [SerializeField] public ScreenFader screenFader;
 
     private void Awake()
     {
@@ -55,6 +58,7 @@ public class GameManager : MonoBehaviour
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         InitPlayer();
+        screenFader.FadeIn(3);
         print("ran on sceneloaded on GameManager");
     }
 
@@ -70,10 +74,20 @@ public class GameManager : MonoBehaviour
             playerCC = !playerCC ? player.GetComponent<CharacterController>() : playerCC;
             playerController = !playerController ? player.GetComponent<ThirdPersonController>() : playerController;
             playerInteraction = !playerInteraction ? player.GetComponent<PlayerInteraction>() : playerInteraction;
+            playerAnimController = !playerAnimController ? player.GetComponent<AnimationController>() : playerAnimController;
             playerT = player.transform;
         }
         Transform levelSpawn = GameObject.FindWithTag("Respawn").transform;
         TeleportPlayer(levelSpawn.position, levelSpawn.rotation);
+        playerController.movementEnabled = true;
+
+        // Initialize screenFader if it's null
+        if (screenFader == null)
+        {
+            GameObject screenFaderObj = GameObject.FindWithTag("Screen Fade");
+            if (screenFaderObj != null)
+                screenFader = screenFaderObj.GetComponent<ScreenFader>();
+        }
 
         if (objectiveText == null)
         {
@@ -108,7 +122,7 @@ public class GameManager : MonoBehaviour
         virtualCamera.OnTargetObjectWarped(playerT, newPos - playerT.position);
         virtualCamera.ForceCameraPosition(newPos, newRot);
         virtualCamera.PreviousStateIsValid = false;
-        
+
         // Disable character controller for teleportation
         playerCC.enabled = false;
 

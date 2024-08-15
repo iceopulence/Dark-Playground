@@ -2144,6 +2144,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6998757543423939440}
   - component: {fileID: 842275096477652771}
+  - component: {fileID: 8550858544190833091}
   - component: {fileID: 8814700483101677560}
   - component: {fileID: 9049755006918857926}
   - component: {fileID: 1963178400475696644}
@@ -2208,6 +2209,19 @@ MonoBehaviour:
   FallTimeout: 0.25
   movementEnabled: 1
   testing: 0
+--- !u!114 &8550858544190833091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7668297879549561290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2065b388c19a6d9488d03b6076bd131f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handTransform: {fileID: 5175650139483158707}
 --- !u!143 &8814700483101677560
 CharacterController:
   m_ObjectHideFlags: 0

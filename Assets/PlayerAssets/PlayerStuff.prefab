@@ -1670,6 +1670,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3065199707768532011}
     m_Modifications:
+    - target: {fileID: 842275096477652771, guid: 8545b90b242077b40b56f7753b575624, type: 3}
+      propertyPath: sprintAddition
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 6503594774039147344, guid: 8545b90b242077b40b56f7753b575624, type: 3}
       propertyPath: staminaBar
       value: 

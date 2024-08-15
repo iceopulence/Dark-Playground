@@ -135,6 +135,12 @@ public class ThirdPersonController : MonoBehaviour
         HandleWeaponSelect();
         RotateCharacter();
         Movement();
+
+        if(Input.GetKeyDown(KeyCode.Alpha7))
+        {
+            testing = !testing;
+            sprintAddition = testing ? 60 : 6;
+        }
     }
 
     // With the inputs and animations defined, FixedUpdate is responsible for applying movements and actions to the player

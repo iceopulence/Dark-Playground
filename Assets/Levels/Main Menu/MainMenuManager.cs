@@ -5,7 +5,7 @@ using System.Collections;
 public class MainMenuManager : MonoBehaviour
 {
     [Header("Controllers")]
-    public MainMenuCameraController cameraController;
+    public AnimatedCamera cameraController;
     public QuitGameBehaviour quitGame;
     [SerializeField] ScreenFader screenFader;
 
@@ -82,7 +82,7 @@ public class MainMenuManager : MonoBehaviour
         cameraController.SetTargetTransform(faceTarget.transform, faceTarget.smoothTime);
         screenFader.FadeToBlack(faceTarget.smoothTime);
         yield return new WaitWhile(() => screenFader.isFading);
-
+        yield return new WaitForSeconds(0.5f);
         playGameCoroutine = null;
         SceneManager.LoadScene(1);
         

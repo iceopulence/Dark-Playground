@@ -5,14 +5,11 @@ public class GameInitializer : MonoBehaviour
 
     [SerializeField] Quest simpleQuest;
     private void Start()
-    {
-        QuestManager questManager = FindObjectOfType<QuestManager>();
-
-        
+    {   
         if(simpleQuest != null)
         {
             // Add the quest to the quest manager
-            questManager.AddQuest(simpleQuest);
+            QuestManager.Instance.AddQuest(simpleQuest);
             print("ran");
         }
     }

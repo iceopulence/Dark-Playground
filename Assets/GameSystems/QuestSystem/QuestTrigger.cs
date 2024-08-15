@@ -31,7 +31,8 @@ public abstract class QuestTrigger : MonoBehaviour
 
     private void HandleStatusChanged(ObjectiveStatus status)
     {
-        gameObject.SetActive(status == ObjectiveStatus.Active);
+        // gameObject.SetActive(status == ObjectiveStatus.Active);
+        this.enabled = status == ObjectiveStatus.Active;
     }
 
     protected void Complete()

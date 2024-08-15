@@ -1161,10 +1161,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainCamera
       objectReference: {fileID: 0}
-    - target: {fileID: 7160645635010840205, guid: eda8685dbb717fe41a3ebdd3edf8b8cb, type: 3}
-      propertyPath: testing
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8801293446149904310, guid: eda8685dbb717fe41a3ebdd3edf8b8cb, type: 3}
       propertyPath: m_TagString
       value: annoying thing
@@ -1605,7 +1601,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2799338341836083879, guid: 91fb6d2439e76014bbc5eba88661038a, type: 3}
       propertyPath: testing
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2799338341836083879, guid: 91fb6d2439e76014bbc5eba88661038a, type: 3}
       propertyPath: controller

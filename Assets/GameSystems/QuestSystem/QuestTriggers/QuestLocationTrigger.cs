@@ -14,7 +14,7 @@ public class QuestLocationTrigger : QuestTrigger
     {
         if (Vector3.Distance(transform.position, playerT.position) <= triggerRadius)
         {
-            TriggerEvent();
+            // TriggerEvent();
             Complete();
         }
     }

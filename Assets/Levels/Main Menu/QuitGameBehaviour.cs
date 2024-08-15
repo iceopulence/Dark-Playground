@@ -8,7 +8,7 @@ public class QuitGameBehaviour : MonoBehaviour
     public GameObject areYouSureAboutThat;
 
 
-    public MainMenuCameraController menuCameraController;
+    public AnimatedCamera menuCameraController;
 
     [SerializeField] MainMenuManager mainMenuManager;
 
