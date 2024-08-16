@@ -4,7 +4,7 @@ public class QuestInteractable : MonoBehaviour, IInteractable
 {
     [SerializeField] public string itemId;
 
-    public void OnInteract()
+    public void OnInteract(PlayerInteraction interactor)
     {
         
     }

@@ -31,7 +31,7 @@ public class Door : MonoBehaviour, IInteractable
         }
     }
 
-    public void OnInteract()
+    public void OnInteract(PlayerInteraction interactor)
     {
         if (isSwinging)
         {

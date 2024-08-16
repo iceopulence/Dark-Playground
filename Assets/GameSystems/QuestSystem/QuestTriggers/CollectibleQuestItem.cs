@@ -4,6 +4,7 @@ using UnityEngine;
 public class CollectibleQuestItem : QuestTrigger
 {
     public Color gizmoColor = new Color(1f, 1f, 0, 0.5f);
+    public bool gizmoActive = true;
 
     void Start()
     {
@@ -15,7 +16,6 @@ public class CollectibleQuestItem : QuestTrigger
     {
         if (other.CompareTag("Player"))
         {
-            // TriggerEvent();
             Complete();
         }
     }
@@ -27,6 +27,7 @@ public class CollectibleQuestItem : QuestTrigger
 
     void OnDrawGizmos()
     {
+        if (!gizmoActive){return;}
         Gizmos.color = gizmoColor;
         Gizmos.DrawCube(transform.position, transform.localScale);
     }

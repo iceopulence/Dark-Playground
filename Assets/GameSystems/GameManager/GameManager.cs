@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using Cinemachine;
 
@@ -13,10 +14,12 @@ public class GameManager : MonoBehaviour
     [Header("Player Variables")]
     public GameObject player;
     public Transform playerT { get; private set; }
-    ThirdPersonController playerController;
+    public ThirdPersonController playerController;
     CharacterController playerCC;
     PlayerInteraction playerInteraction;
+    public Animator playerAnimator;
     public AnimationController playerAnimController;
+    public VoiceLineController playerVoiceLineController;
 
     [SerializeField] CinemachineBrain cinemachineBrain;
     [SerializeField] CinemachineVirtualCamera virtualCamera;
@@ -29,6 +32,8 @@ public class GameManager : MonoBehaviour
     public AudioSource audioSource { get; private set; }
 
     [SerializeField] public ScreenFader screenFader;
+
+    public UnityEvent onGameOver;
 
     private void Awake()
     {
@@ -75,6 +80,8 @@ public class GameManager : MonoBehaviour
             playerController = !playerController ? player.GetComponent<ThirdPersonController>() : playerController;
             playerInteraction = !playerInteraction ? player.GetComponent<PlayerInteraction>() : playerInteraction;
             playerAnimController = !playerAnimController ? player.GetComponent<AnimationController>() : playerAnimController;
+            playerVoiceLineController = !playerVoiceLineController ? player.GetComponent<VoiceLineController>() : playerVoiceLineController;
+            playerAnimator = !playerAnimator ? player.gameObject.GetComponent<Animator>() : playerAnimator;
             playerT = player.transform;
         }
         Transform levelSpawn = GameObject.FindWithTag("Respawn").transform;
@@ -118,10 +125,13 @@ public class GameManager : MonoBehaviour
     {
 
         // Notify the virtual camera about the player's new position
-        virtualCamera = GameObject.FindWithTag("annoying thing").GetComponent<CinemachineVirtualCamera>();
-        virtualCamera.OnTargetObjectWarped(playerT, newPos - playerT.position);
-        virtualCamera.ForceCameraPosition(newPos, newRot);
-        virtualCamera.PreviousStateIsValid = false;
+        if(virtualCamera == null)
+        {
+            virtualCamera = GameObject.FindWithTag("annoying thing").GetComponent<CinemachineVirtualCamera>();
+            virtualCamera.OnTargetObjectWarped(playerT, newPos - playerT.position);
+            virtualCamera.ForceCameraPosition(newPos, newRot);
+            virtualCamera.PreviousStateIsValid = false;
+        }
 
         // Disable character controller for teleportation
         playerCC.enabled = false;
@@ -134,6 +144,25 @@ public class GameManager : MonoBehaviour
 
         // Re-enable character controller
         playerCC.enabled = true;
+    }
+
+    public void GameOver()
+    {
+        StartCoroutine(GameOverCoroutine());
+    }
+
+    IEnumerator GameOverCoroutine()
+    {
+        screenFader.FadeToBlack(1);
+        onGameOver.Invoke();
+        yield return new WaitForSeconds(8.5f);//wait for the snake part to finish
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void PlaySound(AudioClip audioClip)
+    {
+        audioSource.PlayOneShot(audioClip);
     }
 
     // public void SetPlayerControlsEnabled(bool enabled)

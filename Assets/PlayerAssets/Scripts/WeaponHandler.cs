@@ -6,7 +6,7 @@ public class WeaponHandler : MonoBehaviour
 {
     private Animator animator;
     public GameObject weapon;
-    public Weapon heldWeapon;
+    public ItemSO heldWeapon;
 
     int weaponState = 0;
 
@@ -26,6 +26,11 @@ public class WeaponHandler : MonoBehaviour
 
     Transform camT;
 
+    [Header("Weapon Flags")]
+    public bool hasPipe = false;
+    public bool hasGun = false;
+    
+
     void Awake()
     {
         animator = GetComponent<Animator>();
@@ -35,7 +40,7 @@ public class WeaponHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (hasPipe && Input.GetKeyDown(KeyCode.Alpha1))
         {
             if (!holdingWeapon)
             {
@@ -45,9 +50,12 @@ public class WeaponHandler : MonoBehaviour
             {
                 UnEquipWeapon();
             }
+            
+            //AnimState
+            animator.SetInteger("AnimState", holdingWeapon ? 1 : 0);
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse0) && holdingWeapon)
+        if (holdingWeapon && Input.GetKeyDown(KeyCode.Mouse0))
         {
             StartAttack();
         }
@@ -81,38 +89,6 @@ public class WeaponHandler : MonoBehaviour
     {
         attacking = false;
     }
-
-    // IEnumerator AttackCoroutine()
-    // {
-    //     Vector3 spherecastOrigin = transform.position + Vector3.up * attackOrigin;
-
-    //     List<Health> hitHealths = new List<Health>();
-
-    //     //check if we hit anything
-
-    //     while(attacking)
-    //     {
-    //         print("attacking");
-    //         RaycastHit hit;
-    //         if (Physics.SphereCast(spherecastOrigin, attackSize, camT.forward, out hit, attackRange, attackableLayers))
-    //         {
-    //             print(hit.transform.gameObject.name);
-    //             Health attackedHealth = hit.transform.GetComponent<Health>();
-    //             yield return null;
-    //             if (!hitHealths.Contains(attackedHealth))
-    //             {
-    //                 attackedHealth.Damage(heldWeapon.damage);
-    //                 hitHealths.Add(attackedHealth);
-    //             }
-
-    //             yield return null;
-    //         }
-    //     }
-
-
-    //     // yield return new WaitWhile(() => attacking);
-    //     attacking = false;
-    // }
 
     void EquipWeapon()
     {

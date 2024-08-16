@@ -132,7 +132,6 @@ public class ThirdPersonController : MonoBehaviour
             //isCrouching = false; 
         }
 
-        HandleWeaponSelect();
         RotateCharacter();
         Movement();
 
@@ -291,9 +290,6 @@ public class ThirdPersonController : MonoBehaviour
             // Sprint
             isSprinting = cc.velocity.magnitude > minimumSpeed && inputSprint;
             animator.SetBool("sprint", isSprinting);
-
-            //AnimState
-            animator.SetInteger("AnimState", animState);
         }
         if (animator)
         {
@@ -322,14 +318,6 @@ public class ThirdPersonController : MonoBehaviour
         if (Physics.Raycast(ccCenter, Vector3.up, hitCalc, GroundLayers))
         {
             verticalDirection = gravity * Time.deltaTime;
-        }
-    }
-
-    void HandleWeaponSelect()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            animState = animState == 1 ? 0 : 1;
         }
     }
 

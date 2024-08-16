@@ -5,9 +5,13 @@ using UnityEngine.Events;
 
 public class FirstDandidEncounterController : MonoBehaviour
 {
+    public bool testing;//skips cutscene
+
+    public AudioSource dandidAudioSource;
+
     [Header("Audio Settings")]
     [Tooltip("Sound clip to be played during sequences.")]
-    public AudioClip soundClip;
+    public AudioClip triggerSFX;
 
     [Header("Timing Settings")]
     [Tooltip("Time to wait after playing the sound.")]
@@ -38,6 +42,8 @@ public class FirstDandidEncounterController : MonoBehaviour
     public AudioClip playerHurtSound;
     public AudioClip powderSFX;
     public AudioClip transitioningSound;
+    public AudioClip whatTheSigmaSFX;
+
     
 
     [Header("Camera Settings")]
@@ -80,7 +86,7 @@ public class FirstDandidEncounterController : MonoBehaviour
 
     private IEnumerator PlaySoundAndAnimate()
     {
-        AudioSource.PlayClipAtPoint(soundClip, dandidTransform.position);
+        dandidAudioSource.PlayOneShot(triggerSFX);
         yield return new WaitForSeconds(waitTime);
 
         if (dandidAnimator != null)
@@ -96,6 +102,10 @@ public class FirstDandidEncounterController : MonoBehaviour
     {
         onStartSecondSequence.Invoke();
         StartCoroutine(Sequence2());
+
+        if(testing)
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            return;
     }
 
     private IEnumerator Sequence2()
@@ -126,7 +136,9 @@ public class FirstDandidEncounterController : MonoBehaviour
         dandidTransform.position = secondaryMoveTarget.position;
         dandidTransform.rotation = secondaryMoveTarget.rotation;
         dandidTransform.gameObject.SetActive(true);
-        yield return MoveDandid(finalMoveTarget, 2f);
+        yield return MoveDandid(finalMoveTarget, 3.5f);
+
+        AudioSource.PlayClipAtPoint(whatTheSigmaSFX, playerTransform.position);
 
         while (rotationProgress < 1f)
         {
@@ -134,6 +146,7 @@ public class FirstDandidEncounterController : MonoBehaviour
             playerTransform.rotation = Quaternion.Lerp(initialRotation, targetRotation, rotationProgress);
             yield return null;
         }
+        
 
         dandidAnimator.SetTrigger("Sprinkle Powder");
         AudioSource.PlayClipAtPoint(powderSFX, dandidTransform.position);
@@ -147,6 +160,8 @@ public class FirstDandidEncounterController : MonoBehaviour
         AudioSource.PlayClipAtPoint(transitioningSound, secondaryCamera.transform.position, 0.2f);
         yield return new WaitWhile(() => screenFader.isFading);
         yield return new WaitForSeconds(0.5f);
+
+        GameManager.Instance.playerAnimController.ClearHands();
 
         // load next scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);

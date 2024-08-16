@@ -18,6 +18,20 @@ public class AnimationController : MonoBehaviour
 
         // Calculate offset and position the object relative to the hand
         Vector3 offset = otherObject.transform.position - handTransform.position;
-        otherObject.transform.localPosition = offset;
+        otherObject.transform.position = handTransform.position + offset;
+    }
+
+    public void DropHeldObject()
+    {
+        
+    }
+
+     public void ClearHands()
+    {
+        // Iterate through all children of the handTransform and destroy them
+        foreach (Transform child in handTransform)
+        {
+            Destroy(child.gameObject);
+        }
     }
 }

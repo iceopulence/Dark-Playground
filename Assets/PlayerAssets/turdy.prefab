@@ -2143,15 +2143,16 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6998757543423939440}
+  - component: {fileID: 6503594774039147344}
+  - component: {fileID: 7441521876140530995}
   - component: {fileID: 842275096477652771}
   - component: {fileID: 8550858544190833091}
-  - component: {fileID: 8814700483101677560}
-  - component: {fileID: 9049755006918857926}
+  - component: {fileID: 7285985198248783199}
   - component: {fileID: 1963178400475696644}
-  - component: {fileID: 6503594774039147344}
+  - component: {fileID: 8814700483101677560}
   - component: {fileID: 6641249177949032141}
-  - component: {fileID: 7441521876140530995}
   - component: {fileID: 4017413397227456778}
+  - component: {fileID: 9049755006918857926}
   - component: {fileID: 4966436737305942039}
   m_Layer: 3
   m_Name: turdy
@@ -2181,6 +2182,45 @@ Transform:
   - {fileID: 2345814955509099222}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6503594774039147344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7668297879549561290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed26813fdd55a9c44ad6386ba59be475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxStamina: 1
+  currentStamina: 1
+  recoverySpeed: 0.05
+  recoverySpeedBoost: 0.05
+  depletionSpeed: 0.05
+  staminaBar: {fileID: 0}
+--- !u!114 &7441521876140530995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7668297879549561290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ebf88cb163a8784cbc4e3a94ecb609d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionDistance: 5
+  sphereRadius: 0.5
+  interactableLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  interactKey: 101
+  interactionIndicator: {fileID: 0}
+  interactionText: {fileID: 0}
+  mainCam: {fileID: 0}
 --- !u!114 &842275096477652771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2203,7 +2243,7 @@ MonoBehaviour:
   GroundedRadius: 0.2
   GroundLayers:
     serializedVersion: 2
-    m_Bits: 193
+    m_Bits: 449
   JumpHeight: 65
   JumpTimeout: 0.05
   FallTimeout: 0.25
@@ -2222,6 +2262,66 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   handTransform: {fileID: 5175650139483158707}
+--- !u!114 &7285985198248783199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7668297879549561290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d622b2435a2f5c469f1f320437b5cd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 4966436737305942039}
+  voiceClips:
+  - {fileID: 8300000, guid: c410c9dfdc9407849a35d0b276418374, type: 3}
+  - {fileID: 8300000, guid: 96ba4369510905142b6e8b11be4ad8ef, type: 3}
+  - {fileID: 8300000, guid: 7d0cf7147d1001b4eadcb777dbe07a95, type: 3}
+  - {fileID: 8300000, guid: e39b0559872aba148a99f82c8136654e, type: 3}
+  - {fileID: 8300000, guid: 631101a9e8b263449a5ea04c2044d7ce, type: 3}
+  - {fileID: 8300000, guid: dde5169623351f4498b028fec46966a6, type: 3}
+  - {fileID: 8300000, guid: eef2cfb4f19faf042bb8f4f963ae9969, type: 3}
+  - {fileID: 8300000, guid: 1087e2d87163b1c44b12044b8edccd39, type: 3}
+  - {fileID: 8300000, guid: 2b74b42b4d279df4b836c0b27bd2f944, type: 3}
+  - {fileID: 8300000, guid: e3f2c52f5701bed44924307d1bd02351, type: 3}
+  - {fileID: 8300000, guid: b94873c62ccc59f4abd59668138db8c4, type: 3}
+  - {fileID: 8300000, guid: 2066124ca7bd4e94082b87018cac8c61, type: 3}
+  - {fileID: 8300000, guid: cef17eb636c917740a3a92aa3addbcb8, type: 3}
+  - {fileID: 8300000, guid: a81efe08f99e7cd4da5ceaa80d2785e6, type: 3}
+  - {fileID: 8300000, guid: 0344d4d6a9468a54f8503523f4e95667, type: 3}
+  - {fileID: 8300000, guid: 773bffd943fbdc947b6bb5b268bdbb3f, type: 3}
+  - {fileID: 8300000, guid: 98a2948a019981f498e3e89f48fa8508, type: 3}
+  - {fileID: 8300000, guid: cc484a4d049246f4bb1a7d6ea65d6f14, type: 3}
+  - {fileID: 8300000, guid: a12b461d5853a434a86795a06d03b22a, type: 3}
+  - {fileID: 8300000, guid: d299fabd6ca50dc4980416e73122a9cc, type: 3}
+  - {fileID: 8300000, guid: 1e1f982e2b062314fae166b9ef662f3a, type: 3}
+  - {fileID: 8300000, guid: 9314f8c1d6c29404a8efcb60ad6a2ca1, type: 3}
+  - {fileID: 8300000, guid: c0a2b5fa319407b468505a27295ddf62, type: 3}
+--- !u!114 &1963178400475696644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7668297879549561290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c775577a15217542a4715ffc7304696, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapon: {fileID: 3393718320142397542, guid: f0f1bf583b39fac4a8d9347d7c4d94cc, type: 3}
+  heldWeapon: {fileID: 0}
+  handT: {fileID: 8737577994645774118}
+  attackRange: 2
+  attackSize: {x: 1, y: 2, z: 1}
+  attackOrigin: 0.8
+  attackableLayers:
+    serializedVersion: 2
+    m_Bits: 72
+  pipeEnabled: 0
+  gunEnabled: 0
 --- !u!143 &8814700483101677560
 CharacterController:
   m_ObjectHideFlags: 0
@@ -2247,60 +2347,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 3.2, z: 0}
---- !u!114 &9049755006918857926
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7668297879549561290}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fff0960ef4ea6e04eac66b4a7fd2189d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_RigLayers:
-  - m_Rig: {fileID: 5948074297083853090}
-    m_Active: 1
-  m_Effectors: []
---- !u!114 &1963178400475696644
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7668297879549561290}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c775577a15217542a4715ffc7304696, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weapon: {fileID: 3393718320142397542, guid: f0f1bf583b39fac4a8d9347d7c4d94cc, type: 3}
-  handT: {fileID: 8737577994645774118}
-  attackRange: 2
-  attackSize: {x: 1, y: 2, z: 1}
-  attackOrigin: 0.8
-  attackableLayers:
-    serializedVersion: 2
-    m_Bits: 72
---- !u!114 &6503594774039147344
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7668297879549561290}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed26813fdd55a9c44ad6386ba59be475, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxStamina: 1
-  currentStamina: 1
-  recoverySpeed: 0.05
-  recoverySpeedBoost: 0.05
-  depletionSpeed: 0.05
-  staminaBar: {fileID: 0}
 --- !u!114 &6641249177949032141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2317,25 +2363,6 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 193
---- !u!114 &7441521876140530995
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7668297879549561290}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ebf88cb163a8784cbc4e3a94ecb609d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactionDistance: 5
-  interactableLayer:
-    serializedVersion: 2
-    m_Bits: 256
-  interactKey: 101
-  interactionIndicator: {fileID: 0}
-  mainCam: {fileID: 0}
 --- !u!95 &4017413397227456778
 Animator:
   serializedVersion: 7
@@ -2358,6 +2385,22 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &9049755006918857926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7668297879549561290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fff0960ef4ea6e04eac66b4a7fd2189d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RigLayers:
+  - m_Rig: {fileID: 5948074297083853090}
+    m_Active: 1
+  m_Effectors: []
 --- !u!82 &4966436737305942039
 AudioSource:
   m_ObjectHideFlags: 0

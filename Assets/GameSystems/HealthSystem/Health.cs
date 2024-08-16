@@ -8,9 +8,9 @@ public class Health : MonoBehaviour
 
     public UnityEvent onDeath;
 
-    public AudioClip[] hitSounds;
+    public HealthSoundContainer soundContainer;
 
-    public GameObject droppedItem;
+    // public GameObject droppedItem;
 
     void Start()
     {
@@ -26,9 +26,11 @@ public class Health : MonoBehaviour
 
         print("damaged " + currentHealth);
 
-        if(hitSounds != null)
+        int hitSoundsLength = soundContainer.hitSounds.Length;
+
+        if (hitSoundsLength > 0)
         {
-            AudioSource.PlayClipAtPoint(hitSounds[Random.Range(0, hitSounds.Length)], transform.position);
+            AudioSource.PlayClipAtPoint(soundContainer.hitSounds[Random.Range(0, hitSoundsLength)], transform.position);
         }
 
         // Check if health has dropped to zero or below.
@@ -49,11 +51,12 @@ public class Health : MonoBehaviour
     {
         // Handle what happens when health is depleted.
         Debug.Log(gameObject.name + " has died.");
-        // Optionally deactivate the game object.
-        // gameObject.SetActive(false);
 
-        Instantiate(droppedItem, transform.position, transform.rotation);
+        // Instantiate(droppedItem, transform.position, transform.rotation); 
+
+        AudioSource.PlayClipAtPoint(soundContainer.deathSound, transform.position);
 
         onDeath.Invoke();
+        gameObject.SetActive(false);
     }
 }

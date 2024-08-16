@@ -1,13 +1,16 @@
 // PlayerInteraction.cs
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerInteraction : MonoBehaviour
 {
     public float interactionDistance = 3.0f;
+    public float sphereRadius = 0.5f;
     public LayerMask interactableLayer;
     public KeyCode interactKey;
     [SerializeField] private Image interactionIndicator;
+    [SerializeField] private TextMeshProUGUI interactionText;
 
     private Transform _lastHitTransform;
     [SerializeField] private Camera mainCam;
@@ -23,6 +26,8 @@ public class PlayerInteraction : MonoBehaviour
         {
             Debug.LogError("Main camera is not set or found.");
         }
+
+        TurnOffIndicators();
     }
 
     void Update()
@@ -32,17 +37,9 @@ public class PlayerInteraction : MonoBehaviour
             RaycastHit hit;
             Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out hit, interactionDistance, interactableLayer))
+            if (Physics.SphereCast(ray, sphereRadius, out hit, interactionDistance, interactableLayer, QueryTriggerInteraction.Collide))
             {
-                // print("maybe ill be tracer");
-                if (_lastHitTransform == null || _lastHitTransform != hit.transform)
-                {
-                    _lastHitTransform = hit.transform;
-                    if (interactionIndicator != null)
-                    {
-                        interactionIndicator.enabled = true;
-                    }
-                }
+                ShowIndicators(hit.collider.gameObject.name);
 
                 if (Input.GetKeyDown(interactKey))
                 {
@@ -51,21 +48,36 @@ public class PlayerInteraction : MonoBehaviour
                     if (interactableObject != null)
                     {
                         // print("what about widdowmaker");
-                        interactableObject.OnInteract();
+                        interactableObject.OnInteract(this);
                     }
                 }
             }
             else
             {
-                if (_lastHitTransform != null)
-                {
-                    _lastHitTransform = null;
-                    if (interactionIndicator != null)
-                    {
-                        interactionIndicator.enabled = false;
-                    }
-                }
+                _lastHitTransform = null;
+                TurnOffIndicators();
             }
+        }
+    }
+
+    void ShowIndicators(string name_interactable)
+    {
+        if (interactionIndicator)
+        {
+            interactionIndicator.enabled = true;
+        }
+        interactionText.text = "Press " + interactKey.ToString() + " to interact with " + name_interactable;
+    }
+
+    void TurnOffIndicators()
+    {
+        if (interactionIndicator != null)
+        {
+            interactionIndicator.enabled = false;
+        }
+        if (interactionText != null)
+        {
+            interactionText.text = "";
         }
     }
 
