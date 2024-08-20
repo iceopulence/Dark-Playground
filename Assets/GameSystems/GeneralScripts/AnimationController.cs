@@ -31,8 +31,9 @@ public class AnimationController : MonoBehaviour
         // Iterate through all children of the handTransform and destroy them
         foreach (Transform child in handTransform)
         {
-            if( child != handTransform)
+            if( child != handTransform && !child.gameObject.CompareTag("Player"))
             {
+                print(child.gameObject.name + " in forecah");
                 Destroy(child.gameObject);
             }
             

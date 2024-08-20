@@ -19,10 +19,15 @@ public class Door : MonoBehaviour, IInteractable
     private Coroutine swingCoroutine;
     [SerializeField] private BoxCollider boxCollider; // Reference to the BoxCollider
 
+    public enum HingeAxis { X, Y, Z }
+
+    public HingeAxis swingAxis = HingeAxis.Z;
+
     private void Start()
     {
         closedRotation = transform.rotation;
-        openRotation = closedRotation * Quaternion.Euler(0, 0, openDirectionPositive ? openAngle : -openAngle);
+        float swingAngle = openDirectionPositive ? openAngle : -openAngle;
+        openRotation = closedRotation * Quaternion.Euler(swingAxis == HingeAxis.X ? swingAngle : 0, swingAxis == HingeAxis.Y ? swingAngle : 0, swingAxis == HingeAxis.Z ? swingAngle : 0);
         boxCollider = GetComponent<BoxCollider>(); // Get the BoxCollider component
 
         if (isOpen)
@@ -90,29 +95,54 @@ public class Door : MonoBehaviour, IInteractable
         return true; // This should interface with your game's inventory system
     }
 
-    // private void OnDrawGizmos()
-    // {
-    //     if (!boxCollider) return; // Early exit if boxCollider is not set
+    private void OnDrawGizmos()
+    {
+        if (!boxCollider) return; // Early exit if boxCollider is not set
 
-    //     // Calculate the center of the door based on the BoxCollider's center and transform
-    //     Vector3 centerPoint = transform.position + transform.rotation * Vector3.Scale(boxCollider.center, transform.localScale);
+        // Calculate the center of the door based on the BoxCollider's center and transform
+        Vector3 centerPoint = transform.position + transform.rotation * Vector3.Scale(boxCollider.center, transform.localScale);
 
-    //     // Adjust the size of the gizmo based on the BoxCollider's size and transform
-    //     Vector3 gizmoSize = Vector3.Scale(boxCollider.size, transform.localScale);
+        // Adjust the size of the gizmo based on the BoxCollider's size and transform
+        Vector3 gizmoSize = transform.localScale;
 
-    //     // Draw the door in its current state (open or closed)
-    //     Gizmos.color = isOpen ? Color.green : Color.red;
-    //     Gizmos.matrix = Matrix4x4.TRS(centerPoint, transform.rotation, gizmoSize);
-    //     Gizmos.DrawCube(Vector3.zero, new Vector3(1, 2, 0.1f));
+        // Draw the door in its current state (open or closed)
+        Gizmos.color = isOpen ? Color.green : Color.red;
+        Gizmos.matrix = Matrix4x4.TRS(centerPoint, transform.rotation, gizmoSize);
+        Gizmos.DrawWireCube(Vector3.zero, new Vector3(1, 2, 0.1f));
 
-    //     // If not in play mode, draw the door's open position for visualization
-    //     if (!Application.isPlaying)
-    //     {
-    //         Gizmos.color = Color.yellow;
-    //         Quaternion openStateRotation = closedRotation * Quaternion.Euler(0, openDirectionPositive ? openAngle : -openAngle, 0);
-    //         Gizmos.matrix = Matrix4x4.TRS(centerPoint, openStateRotation, gizmoSize);
-    //         Gizmos.DrawCube(Vector3.zero, new Vector3(1, 2, 0.1f));
-    //     }
-    // }
+        // Draw the hinge axis
+        Gizmos.color = Color.blue;
+        Vector3 hingeDirection = GetHingeDirection();
+        Gizmos.DrawLine(centerPoint, centerPoint + hingeDirection * 2f);
 
+        // Draw the door's open and closed positions for visualization
+        if ( true)
+        {
+            // Closed position
+            Gizmos.color = Color.red;
+            Gizmos.matrix = Matrix4x4.TRS(centerPoint, closedRotation, gizmoSize);
+            Gizmos.DrawWireCube(Vector3.zero, new Vector3(1, 2, 0.1f));
+
+            // Open position
+            Gizmos.color = Color.green;
+            Gizmos.matrix = Matrix4x4.TRS(centerPoint, openRotation, gizmoSize);
+            Gizmos.DrawWireCube(Vector3.zero, new Vector3(1, 2, 0.1f));
+        }
+    }
+
+    private Vector3 GetHingeDirection()
+    {
+        // Determine the hinge direction based on the selected swing axis
+        switch (swingAxis)
+        {
+            case HingeAxis.X:
+                return transform.right;
+            case HingeAxis.Y:
+                return transform.up;
+            case HingeAxis.Z:
+                return transform.forward;
+            default:
+                return transform.up;
+        }
+    }
 }

@@ -138,7 +138,7 @@ public class FirstDandidEncounterController : MonoBehaviour
         dandidTransform.gameObject.SetActive(true);
         yield return MoveDandid(finalMoveTarget, 3.5f);
 
-        AudioSource.PlayClipAtPoint(whatTheSigmaSFX, playerTransform.position);
+       GameManager.Instance.playerVoiceLineController.PlayVoiceLine("erm what the sigma");
 
         while (rotationProgress < 1f)
         {
