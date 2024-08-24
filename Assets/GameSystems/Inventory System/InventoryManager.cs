@@ -12,11 +12,13 @@ public class InventoryManager : MonoBehaviour
     public ItemSO startingItem;
 
     private Dictionary <KeyCode, int> keyIndexMap;
+
+    List<string> keysHeld = new List<string>();
     
     private void Awake()
     {
 
-        keyIndexMap = new Dictionary<KeyCode,int> {
+        keyIndexMap = new Dictionary<KeyCode,int>{
         {KeyCode.Alpha1, 0} , {KeyCode.Alpha2, 1}, {KeyCode.Alpha3, 2}, {KeyCode.Alpha4, 3}, {KeyCode.Alpha5,4}
     };
         if (Instance == null)
@@ -96,5 +98,14 @@ public class InventoryManager : MonoBehaviour
             hotbarItems[slot].OnDrop();
             hotbarItems.RemoveAt(slot);
         }
+    }
+
+     public void AddKey(string keyAdded)
+    {
+        keysHeld.Add(keyAdded);
+    }
+    public bool CheckHasKey(string keyChecked)
+    {
+       return keysHeld.Contains(keyChecked);
     }
 }
