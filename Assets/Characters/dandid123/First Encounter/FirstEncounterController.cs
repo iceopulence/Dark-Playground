@@ -72,6 +72,9 @@ public class FirstDandidEncounterController : MonoBehaviour
         dandidAnimator = dandidTransform.GetComponent<Animator>();
         playerAnimator = playerTransform.GetComponent<Animator>();
 
+        Rigidbody soapRB = soapT.GetComponent<Rigidbody>();
+        soapRB.isKinematic = true;
+
         playerController = playerTransform.GetComponent<ThirdPersonController>();
         mainCamera = Camera.main;
         
@@ -112,27 +115,34 @@ public class FirstDandidEncounterController : MonoBehaviour
     {
         playerController.DeactivateControls();
 
+        //place the player at starting place
         playerTransform.position = playerStartPlacement2ndSequence.transform.position;
         playerTransform.rotation = playerStartPlacement2ndSequence.transform.rotation;
-
+        //turn on the cinematic camera
         mainCamera.gameObject.SetActive(false);
         secondaryCamera.gameObject.SetActive(true);
 
+        //pickup soap part
         playerAnimator.SetTrigger("Pickup Soap");
         float timeToPickupSoap = 2.1f;
         yield return new WaitForSeconds(timeToPickupSoap);
         GameManager.Instance.playerAnimController.PlaceObjectInHand(soapT);
         yield return new WaitForSeconds(4f - timeToPickupSoap); // Assuming duration of the animation is known
-
+        
+        //Move camera to new angle
         animatedCamera.SetTargetTransform(cameraSecondTarget);
         yield return new WaitWhile(() => animatedCamera.isAnimating);
 
-        // Rotate the player smoothly
+        GameManager.Instance.playerAnimController.DropHeldObject();
+        yield return new WaitForSeconds(1.5f);
+
+        // player turns around to look at dandid
         Quaternion initialRotation = playerTransform.rotation;
         Quaternion targetRotation = Quaternion.Euler(0, initialRotation.eulerAngles.y + 180, 0);
         float rotationSpeed = 1f; // Speed of rotation
         float rotationProgress = 0f; // Progress from 0 to 1
-
+        
+        //dandid comes out of the floor
         dandidTransform.position = secondaryMoveTarget.position;
         dandidTransform.rotation = secondaryMoveTarget.rotation;
         dandidTransform.gameObject.SetActive(true);
@@ -147,7 +157,7 @@ public class FirstDandidEncounterController : MonoBehaviour
             yield return null;
         }
         
-
+        //dandid sprays the dust onto player
         dandidAnimator.SetTrigger("Sprinkle Powder");
         AudioSource.PlayClipAtPoint(powderSFX, dandidTransform.position);
         yield return new WaitForSeconds(1.5f);
@@ -160,7 +170,7 @@ public class FirstDandidEncounterController : MonoBehaviour
         AudioSource.PlayClipAtPoint(transitioningSound, secondaryCamera.transform.position, 0.2f);
         yield return new WaitWhile(() => screenFader.isFading);
         yield return new WaitForSeconds(0.5f);
-
+        
         GameManager.Instance.playerAnimController.ClearHands();
 
         // load next scene

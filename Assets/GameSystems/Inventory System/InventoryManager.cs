@@ -5,10 +5,20 @@ public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance;
 
-    [SerializeField] private List<ItemSO> hotbarItems = new List<ItemSO>(5);
 
+    [SerializeField] private List<ItemSO> hotbarItems = new List<ItemSO>(5);
+    public ItemSO heldItem;
+
+    public ItemSO startingItem;
+
+    private Dictionary <KeyCode, int> keyIndexMap;
+    
     private void Awake()
     {
+
+        keyIndexMap = new Dictionary<KeyCode,int> {
+        {KeyCode.Alpha1, 0} , {KeyCode.Alpha2, 1}, {KeyCode.Alpha3, 2}, {KeyCode.Alpha4, 3}, {KeyCode.Alpha5,4}
+    };
         if (Instance == null)
         {
             Instance = this;
@@ -18,6 +28,22 @@ public class InventoryManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        AddItem(startingItem);
+
+    }
+
+    void Update()
+    {
+        foreach(var keyCodePair in keyIndexMap)
+        {
+            if(Input.GetKeyDown(keyCodePair.Key))
+            {
+                SelectItem(keyCodePair.Value);
+            }
+        }
+
+        
     }
 
     public void AddItem(ItemSO newItem)
@@ -39,6 +65,20 @@ public class InventoryManager : MonoBehaviour
         {
             hotbarItems[slot].Use();
         }
+    }
+
+    public void SelectItem(int itemIndex)
+    {
+
+        if(hotbarItems[itemIndex] == null)
+        {
+            return;
+        }
+        // tell anim controller to take out that item
+        // save a reference to the item held
+
+        heldItem = hotbarItems[itemIndex];
+        GameManager.Instance.playerAnimController.TakeOutObject();
     }
 
     public void SwapItems(int slot1, int slot2)

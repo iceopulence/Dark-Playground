@@ -2261,7 +2261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2065b388c19a6d9488d03b6076bd131f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  handTransform: {fileID: 5175650139483158707}
+  handTransform: {fileID: 8737577994645774118}
 --- !u!114 &7285985198248783199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2320,8 +2320,8 @@ MonoBehaviour:
   attackableLayers:
     serializedVersion: 2
     m_Bits: 72
-  pipeEnabled: 0
-  gunEnabled: 0
+  hasPipe: 0
+  hasGun: 0
 --- !u!143 &8814700483101677560
 CharacterController:
   m_ObjectHideFlags: 0

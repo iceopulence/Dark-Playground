@@ -95,40 +95,40 @@ public class Door : MonoBehaviour, IInteractable
         return true; // This should interface with your game's inventory system
     }
 
-    private void OnDrawGizmos()
-    {
-        if (!boxCollider) return; // Early exit if boxCollider is not set
+    // private void OnDrawGizmos()
+    // {
+    //     // if (!boxCollider) return; // Early exit if boxCollider is not set
 
-        // Calculate the center of the door based on the BoxCollider's center and transform
-        Vector3 centerPoint = transform.position + transform.rotation * Vector3.Scale(boxCollider.center, transform.localScale);
+    //     // // Calculate the center of the door based on the BoxCollider's center and transform
+    //     // Vector3 centerPoint = transform.position + transform.rotation * Vector3.Scale(boxCollider.center, transform.localScale);
 
-        // Adjust the size of the gizmo based on the BoxCollider's size and transform
-        Vector3 gizmoSize = transform.localScale;
+    //     // // Adjust the size of the gizmo based on the BoxCollider's size and transform
+    //     // Vector3 gizmoSize = transform.localScale;
 
-        // Draw the door in its current state (open or closed)
-        Gizmos.color = isOpen ? Color.green : Color.red;
-        Gizmos.matrix = Matrix4x4.TRS(centerPoint, transform.rotation, gizmoSize);
-        Gizmos.DrawWireCube(Vector3.zero, new Vector3(1, 2, 0.1f));
+    //     // // Draw the door in its current state (open or closed)
+    //     // Gizmos.color = isOpen ? Color.green : Color.red;
+    //     // Gizmos.matrix = Matrix4x4.TRS(centerPoint, transform.rotation, gizmoSize);
+    //     // Gizmos.DrawWireCube(Vector3.zero, new Vector3(1, 2, 0.1f));
 
-        // Draw the hinge axis
-        Gizmos.color = Color.blue;
-        Vector3 hingeDirection = GetHingeDirection();
-        Gizmos.DrawLine(centerPoint, centerPoint + hingeDirection * 2f);
+    //     // // Draw the hinge axis
+    //     // Gizmos.color = Color.blue;
+    //     // Vector3 hingeDirection = GetHingeDirection();
+    //     // Gizmos.DrawLine(centerPoint, centerPoint + hingeDirection * 2f);
 
-        // Draw the door's open and closed positions for visualization
-        if ( true)
-        {
-            // Closed position
-            Gizmos.color = Color.red;
-            Gizmos.matrix = Matrix4x4.TRS(centerPoint, closedRotation, gizmoSize);
-            Gizmos.DrawWireCube(Vector3.zero, new Vector3(1, 2, 0.1f));
+    //     // // Draw the door's open and closed positions for visualization
+    //     // if ( true)
+    //     // {
+    //     //     // Closed position
+    //     //     Gizmos.color = Color.red;
+    //     //     Gizmos.matrix = Matrix4x4.TRS(centerPoint, closedRotation, gizmoSize);
+    //     //     Gizmos.DrawWireCube(Vector3.zero, new Vector3(1, 2, 0.1f));
 
-            // Open position
-            Gizmos.color = Color.green;
-            Gizmos.matrix = Matrix4x4.TRS(centerPoint, openRotation, gizmoSize);
-            Gizmos.DrawWireCube(Vector3.zero, new Vector3(1, 2, 0.1f));
-        }
-    }
+    //     //     // Open position
+    //     //     Gizmos.color = Color.green;
+    //     //     Gizmos.matrix = Matrix4x4.TRS(centerPoint, openRotation, gizmoSize);
+    //     //     Gizmos.DrawWireCube(Vector3.zero, new Vector3(1, 2, 0.1f));
+    //     // }
+    // }
 
     private Vector3 GetHingeDirection()
     {
