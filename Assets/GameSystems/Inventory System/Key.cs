@@ -9,6 +9,7 @@ public class Key : MonoBehaviour
         if(other.gameObject.CompareTag("Player"))
         {
             InventoryManager.Instance.AddKey(keyID);
+            Destroy(this.gameObject);
         }
     }
 }

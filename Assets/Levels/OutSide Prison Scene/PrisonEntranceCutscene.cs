@@ -28,6 +28,7 @@ public class PrisonEntranceCutscene : MonoBehaviour
     public AudioClip doorHandleSFX;
     public AudioClip billieJean;
 
+    private Coroutine sequenceCoroutine;
 
     public bool testing = false;
 
@@ -64,12 +65,12 @@ public class PrisonEntranceCutscene : MonoBehaviour
     {
         if(testing)
         {
-            //load next scene
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            LoadNextScene();
         }
         else
         {
-            StartCoroutine(ActionSequence());
+            sequenceCoroutine = StartCoroutine(ActionSequence());
+            StartCoroutine(CheckForSkip());
         }
     }
 
@@ -136,7 +137,26 @@ public class PrisonEntranceCutscene : MonoBehaviour
         screenFader.FadeToBlack(waitTimeAfterAnimation);
         yield return new WaitWhile(() => screenFader.isFading);
 
-        // load next scene
+        LoadNextScene();
+    }
+
+    private IEnumerator CheckForSkip()
+    {
+        while (true)
+        {
+            if(Input.GetKeyDown(KeyCode.Escape))
+            {
+                //skip
+                StopCoroutine(sequenceCoroutine);
+                LoadNextScene();
+            }
+            //wait for end of frame to sync with update and not crash the game
+            yield return null;
+        }
+    }
+
+    void LoadNextScene()
+    {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 
         mainCamera.gameObject.SetActive(true);

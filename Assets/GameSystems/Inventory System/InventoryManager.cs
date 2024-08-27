@@ -30,8 +30,9 @@ public class InventoryManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-        AddItem(startingItem);
+        
+        if(startingItem != null)
+            AddItem(startingItem);
 
     }
 
@@ -45,7 +46,10 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
-        
+        if(Input.GetKeyDown(KeyCode.J))
+        {
+            AddKey("GaurdOffice");
+        }
     }
 
     public void AddItem(ItemSO newItem)

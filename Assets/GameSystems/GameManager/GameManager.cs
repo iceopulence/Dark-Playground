@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityEngine.Video;
 using Cinemachine;
 
 [RequireComponent(typeof(AudioSource))]
@@ -31,7 +32,9 @@ public class GameManager : MonoBehaviour
     public float textFadeOutSpeed = 0.5f;
     public AudioSource audioSource { get; private set; }
 
-    [SerializeField] public ScreenFader screenFader;
+    [SerializeField] public ScreenFader screenFader { get; private set; }
+
+    public VideoPlayer videoPlayer { get; private set; }
 
     public UnityEvent onGameOver;
 
@@ -94,6 +97,21 @@ public class GameManager : MonoBehaviour
             GameObject screenFaderObj = GameObject.FindWithTag("Screen Fade");
             if (screenFaderObj != null)
                 screenFader = screenFaderObj.GetComponent<ScreenFader>();
+        }
+
+        if(videoPlayer == null)
+        {
+            GameObject videoPlayerObject = GameObject.FindWithTag("Video Player");
+            if(videoPlayerObject != null)
+                videoPlayer = videoPlayerObject.GetComponent<VideoPlayer>();
+        }
+        if(videoPlayer != null)
+        {
+            videoPlayer.gameObject.SetActive(false);
+        }
+        else
+        {
+            Debug.LogError("video player not found");
         }
 
         if (objectiveText == null)
