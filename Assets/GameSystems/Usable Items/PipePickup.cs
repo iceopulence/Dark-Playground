@@ -6,6 +6,8 @@ public class PipePickup : MonoBehaviour, IInteractable
     [SerializeField] ItemSO itemSO;
     [SerializeField] MeshRenderer mr;
 
+    [SerializeField] AudioClip pipeUnlockedVoiceLine;
+
     public void OnInteract(PlayerInteraction interactor)
     {
         if (interactor)
@@ -24,7 +26,7 @@ public class PipePickup : MonoBehaviour, IInteractable
         GameManager.Instance.playerVoiceLineController.PlayVoiceLine("a pipe");
         float lineDuration = GameManager.Instance.playerVoiceLineController.GetVoiceLineLength("a pipe");
         yield return new WaitForSeconds(lineDuration);
-        GameManager.Instance.playerVoiceLineController.PlayVoiceLine("You have unlocked pipe");
+        GameManager.Instance.PlaySound(pipeUnlockedVoiceLine);
         Destroy(this.gameObject);
     }
 }

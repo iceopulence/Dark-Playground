@@ -148,6 +148,8 @@ public class PrisonEntranceCutscene : MonoBehaviour
             {
                 //skip
                 StopCoroutine(sequenceCoroutine);
+                screenFader.FadeToBlack(3);
+                yield return new WaitWhile(() => screenFader.isFading);
                 LoadNextScene();
             }
             //wait for end of frame to sync with update and not crash the game

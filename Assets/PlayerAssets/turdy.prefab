@@ -2154,6 +2154,7 @@ GameObject:
   - component: {fileID: 4017413397227456778}
   - component: {fileID: 9049755006918857926}
   - component: {fileID: 4966436737305942039}
+  - component: {fileID: 7944516600269242699}
   m_Layer: 3
   m_Name: turdy
   m_TagString: Player
@@ -2498,6 +2499,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7944516600269242699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7668297879549561290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a38652b9e3202242a73b591f95ebfbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pushLayers:
+    serializedVersion: 2
+    m_Bits: 321
+  canPush: 1
+  strength: 1.1
 --- !u!1 &7717907957132265151
 GameObject:
   m_ObjectHideFlags: 0

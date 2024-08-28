@@ -9,6 +9,9 @@ public class KidneyRoomIntroCutscene : MonoBehaviour
 
     ThirdPersonController playerController;
 
+
+    private Coroutine CutsceneCoroutine;
+
     [SerializeField] AudioClip introNoise;
 
 
@@ -17,12 +20,17 @@ public class KidneyRoomIntroCutscene : MonoBehaviour
         playerAnimator = GameManager.Instance.playerAnimator;
         playerController = GameManager.Instance.playerController;
 
-        if(!testing)
-            StartCoroutine(IntroCutscene());
+
+        if (!testing)
+        {
+            StartIntroCutscene();
+        }
+
     }
     public void StartIntroCutscene()
     {
-        StartCoroutine(IntroCutscene());
+        CutsceneCoroutine = StartCoroutine(IntroCutscene());
+        StartCoroutine(CheckForSkip());
     }
 
     IEnumerator IntroCutscene()
@@ -42,7 +50,7 @@ public class KidneyRoomIntroCutscene : MonoBehaviour
         playerAnimator.SetBool("Having a bad time", false);
 
         yield return new WaitForSeconds(13f * 0.5f);
-        
+
         VoiceLineController playerVoiceLineController = GameManager.Instance.playerVoiceLineController;
 
         playerVoiceLineController.PlayVoiceLine("where am I");
@@ -53,7 +61,31 @@ public class KidneyRoomIntroCutscene : MonoBehaviour
         playerVoiceLineController.PlayVoiceLine("where did my kidney goo");
         yield return new WaitForSeconds(playerVoiceLineController.GetVoiceLineLength("where did my kidney goo"));
 
+        EndCutscene();
+    }
+
+    void EndCutscene()
+    {
         playerAnimator.SetTrigger("resetAnim");
         playerController.ActivateControls();
     }
+    IEnumerator CheckForSkip()
+    {
+        while (true)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                //skip
+                StopCoroutine(CutsceneCoroutine);
+                EndCutscene();
+            }
+            //wait for end of frame to sync with update and not crash the game
+            yield return null;
+        }
+
+
+
+    }
+
+
 }

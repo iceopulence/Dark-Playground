@@ -44,7 +44,9 @@ public class FirstDandidEncounterController : MonoBehaviour
     public AudioClip transitioningSound;
     public AudioClip whatTheSigmaSFX;
 
-    
+    Coroutine sequence2Coroutine;
+
+
 
     [Header("Camera Settings")]
     Camera mainCamera;
@@ -77,7 +79,7 @@ public class FirstDandidEncounterController : MonoBehaviour
 
         playerController = playerTransform.GetComponent<ThirdPersonController>();
         mainCamera = Camera.main;
-        
+
         screenFader = GameManager.Instance.screenFader;
     }
 
@@ -104,11 +106,12 @@ public class FirstDandidEncounterController : MonoBehaviour
     public void StartSequence2()
     {
         onStartSecondSequence.Invoke();
-        StartCoroutine(Sequence2());
+        sequence2Coroutine = StartCoroutine(Sequence2());
+        StartCoroutine(Check4Skip());
 
-        if(testing)
+        if (testing)
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-            return;
+        return;
     }
 
     private IEnumerator Sequence2()
@@ -128,7 +131,7 @@ public class FirstDandidEncounterController : MonoBehaviour
         yield return new WaitForSeconds(timeToPickupSoap);
         GameManager.Instance.playerAnimController.PlaceObjectInHand(soapT);
         yield return new WaitForSeconds(4f - timeToPickupSoap); // Assuming duration of the animation is known
-        
+
         //Move camera to new angle
         animatedCamera.SetTargetTransform(cameraSecondTarget);
         yield return new WaitWhile(() => animatedCamera.isAnimating);
@@ -141,14 +144,14 @@ public class FirstDandidEncounterController : MonoBehaviour
         Quaternion targetRotation = Quaternion.Euler(0, initialRotation.eulerAngles.y + 180, 0);
         float rotationSpeed = 1f; // Speed of rotation
         float rotationProgress = 0f; // Progress from 0 to 1
-        
+
         //dandid comes out of the floor
         dandidTransform.position = secondaryMoveTarget.position;
         dandidTransform.rotation = secondaryMoveTarget.rotation;
         dandidTransform.gameObject.SetActive(true);
         yield return MoveDandid(finalMoveTarget, 3.5f);
 
-       GameManager.Instance.playerVoiceLineController.PlayVoiceLine("erm what the sigma");
+        GameManager.Instance.playerVoiceLineController.PlayVoiceLine("erm what the sigma");
 
         while (rotationProgress < 1f)
         {
@@ -156,7 +159,7 @@ public class FirstDandidEncounterController : MonoBehaviour
             playerTransform.rotation = Quaternion.Lerp(initialRotation, targetRotation, rotationProgress);
             yield return null;
         }
-        
+
         //dandid sprays the dust onto player
         dandidAnimator.SetTrigger("Sprinkle Powder");
         AudioSource.PlayClipAtPoint(powderSFX, dandidTransform.position);
@@ -170,7 +173,29 @@ public class FirstDandidEncounterController : MonoBehaviour
         AudioSource.PlayClipAtPoint(transitioningSound, secondaryCamera.transform.position, 0.2f);
         yield return new WaitWhile(() => screenFader.isFading);
         yield return new WaitForSeconds(0.5f);
-        
+
+       LoadNextScene();
+    }
+
+    private IEnumerator Check4Skip()
+    {
+        while (true)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                //skip
+                StopCoroutine(sequence2Coroutine);
+                screenFader.FadeToBlack(3);
+                yield return new WaitWhile(() => screenFader.isFading);
+                LoadNextScene();
+            }
+            //wait for end of frame to sync with update and not crash the game
+            yield return null;
+        }
+    }
+
+    void LoadNextScene()
+    {
         GameManager.Instance.playerAnimController.ClearHands();
 
         // load next scene

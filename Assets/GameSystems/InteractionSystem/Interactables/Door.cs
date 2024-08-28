@@ -10,7 +10,7 @@ public class Door : MonoBehaviour, IInteractable
     [SerializeField] private float openAngle = 90f;
     public float swingDuration = 0.75f;
     [SerializeField] private bool openDirectionPositive = true;
-    [SerializeField] private string requiredKey = "MasterKey"; // The specific string value for the key to unlock the door
+    [SerializeField] public string requiredKey = "MasterKey"; // The specific string value for the key to unlock the door
     public bool isOpen = false;
     public bool isLocked = true;
     public Door linkedDoor;
