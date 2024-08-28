@@ -9,7 +9,6 @@ public class KidneyRoomIntroCutscene : MonoBehaviour
 
     ThirdPersonController playerController;
 
-
     private Coroutine CutsceneCoroutine;
 
     [SerializeField] AudioClip introNoise;
@@ -67,6 +66,7 @@ public class KidneyRoomIntroCutscene : MonoBehaviour
     void EndCutscene()
     {
         playerAnimator.SetTrigger("resetAnim");
+        playerAnimator.SetBool("Having a bad time", false);
         playerController.ActivateControls();
     }
     IEnumerator CheckForSkip()
