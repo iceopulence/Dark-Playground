@@ -40,7 +40,7 @@ public class WeaponHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (hasPipe && Input.GetKeyDown(KeyCode.Alpha1))
+        if (hasPipe && Input.GetKeyDown(KeyCode.F))
         {
             if (!holdingWeapon)
             {

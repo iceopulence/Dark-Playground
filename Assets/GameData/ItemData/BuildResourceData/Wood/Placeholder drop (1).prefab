@@ -122,11 +122,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76b6612779f8ea24c9327d1d5eb3ff04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 5358662947028607210}
-  upForce: 10
-  sideForceMax: 5
+  col: {fileID: 0}
+  upForce: 3
+  sideForceMax: 3
   itemSO: {fileID: 0}
-  pickupOnTriggerEnter: 0
+  pickupOnTriggerEnter: 1
 --- !u!54 &5358662947028607210
 Rigidbody:
   m_ObjectHideFlags: 0
