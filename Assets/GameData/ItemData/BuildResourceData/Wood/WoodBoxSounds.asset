@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d718e709f85d8346b409810504e18c0, type: 3}
+  m_Name: WoodBoxSounds
+  m_EditorClassIdentifier: 
+  hitSounds:
+  - {fileID: 8300000, guid: cafee2e46c99a7247a1a29e9d0df52f7, type: 3}
+  - {fileID: 8300000, guid: f19e932839f6bee449d0224c6272522d, type: 3}
+  - {fileID: 8300000, guid: b9746c64fa956ad46b2a111312da0555, type: 3}
+  - {fileID: 8300000, guid: 19e6dd95669b34c489eebda7d57685ac, type: 3}
+  - {fileID: 8300000, guid: a0458d8a02fdcf1409e58533c3375efc, type: 3}
+  - {fileID: 8300000, guid: 80795abfebc8acb449ab0901a3d854ac, type: 3}
+  deathSound: {fileID: 8300000, guid: 1ddcfaed9f518eb4480c559343be318e, type: 3}
+  slidingSounds:
+  - {fileID: 8300000, guid: 9a0c9cb245ee4c541bb9c14825f85a7a, type: 3}
+  - {fileID: 8300000, guid: 52329d29695e87c4885afc4d300bc4bc, type: 3}
+  - {fileID: 8300000, guid: 9bd0c1104a690174c813595c054a8599, type: 3}
+  - {fileID: 8300000, guid: aad537f44d1a59d4684c7352b7d7baab, type: 3}
+  - {fileID: 8300000, guid: a6d6fb15d7f6f374b9df3f75ecca9688, type: 3}
+  - {fileID: 8300000, guid: 8cea7afdc79da774c9e05726a540e597, type: 3}
+  - {fileID: 8300000, guid: 9464fe32b1cf4b64c8e62d10a0e66398, type: 3}
+  - {fileID: 8300000, guid: 220bc170eb1a0ab42aebfb019cad7047, type: 3}
+  - {fileID: 8300000, guid: a4a35c630c23f7f408e680886b5508fd, type: 3}
+  - {fileID: 8300000, guid: fb2ff35328b3ae14186e09ba286e43c3, type: 3}
+  - {fileID: 8300000, guid: 7e2441051771ec945a2230ba0f707750, type: 3}
+  - {fileID: 8300000, guid: 5a4104dc0702e1c40b0974149e248633, type: 3}
+  - {fileID: 8300000, guid: e0adfb7a1d412fe45abe1cade061e8c5, type: 3}
+  bumpSounds: []

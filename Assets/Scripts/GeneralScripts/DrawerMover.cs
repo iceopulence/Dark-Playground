@@ -1,5 +1,8 @@
 using UnityEngine;
+<<<<<<< Updated upstream
 using System.Collections;
+=======
+>>>>>>> Stashed changes
 using System.Collections.Generic;
 
 public class DrawerMover : MonoBehaviour, IInteractable
@@ -14,6 +17,8 @@ public class DrawerMover : MonoBehaviour, IInteractable
     private bool isMoving = false;
     private bool isOpen = false;
     private float startTime;
+    
+    List<GameObject> itemsInDrawer;
 
     List<GameObject> itemsInDrawer;
 
@@ -22,12 +27,50 @@ public class DrawerMover : MonoBehaviour, IInteractable
         startPosition = transform.position;
         targetPosition = startPosition + -transform.up * moveDistance;
 
+<<<<<<< Updated upstream
         if (transform.childCount > 0)
         {
             InitDrawerItems();
         }
 
 
+=======
+        if(transform.childCount > 0)
+        {
+            InitDrawerItems();
+        }
+    }
+
+    void InitDrawerItems()
+    {
+        itemsInDrawer = new List<GameObject>();
+        foreach (Transform child in transform)
+        {
+            if(child != this.transform)
+            {
+                itemsInDrawer.Add(child.gameObject);
+                child.gameObject.SetActive(false);
+                
+
+                DropItemBehaviour drop = child.GetComponent<DropItemBehaviour>();
+                if(drop == null)
+                {
+                    child.gameObject.AddComponent<DropItemBehaviour>(); //make sure it is gonna pop out
+                }
+            }
+        }
+    }
+
+    void ReleaseDrawerItems()
+    {
+        transform.DetachChildren();
+        foreach(GameObject item in itemsInDrawer)
+        {
+            item.SetActive(true);
+        }
+        
+        itemsInDrawer = null;
+>>>>>>> Stashed changes
     }
 
     void InitDrawerItems()
@@ -75,7 +118,12 @@ public class DrawerMover : MonoBehaviour, IInteractable
             {
                 isMoving = false;
                 isOpen = !isOpen;
+<<<<<<< Updated upstream
                 if( isOpen && itemsInDrawer.Count > 0)
+=======
+
+                if(isOpen && itemsInDrawer.Count > 0)
+>>>>>>> Stashed changes
                 {
                     ReleaseDrawerItems();
                 }
@@ -94,9 +142,9 @@ public class DrawerMover : MonoBehaviour, IInteractable
         {
             isMoving = true;
             startTime = Time.time;
-
             AudioClip moveClip = isOpen ? closeSound : openSound;
-            AudioSource.PlayClipAtPoint(moveClip, transform.position);
+            if(moveClip != null)
+                AudioSource.PlayClipAtPoint(moveClip, transform.position);
         }
     }
 
