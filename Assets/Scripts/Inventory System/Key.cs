@@ -21,8 +21,12 @@ public class Key : MonoBehaviour
 
     void PlayKeySound()
     {
-        AudioClip[] keyPickupSounds = Resources.LoadAll<AudioClip>("sfx/KeySounds");
-        AudioClip randomSFX = keyPickupSounds[Random.Range(0, keyPickupSounds.Length)];
-        GameManager.Instance.PlaySound(randomSFX);
+        AudioClip[] keyPickupSounds = Resources.LoadAll<AudioClip>("sfx/Key Sounds");
+        print( keyPickupSounds.Length);
+        if(keyPickupSounds.Length > 0)
+        {
+            AudioClip randomSFX = keyPickupSounds[Random.Range(0, keyPickupSounds.Length)];
+            GameManager.Instance.PlaySound(randomSFX);
+        }
     }
 }
