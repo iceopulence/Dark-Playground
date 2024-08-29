@@ -72,6 +72,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3ca7a78f0fc27254b8f15e959c4e2f0b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5485491443509573638}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3ca7a78f0fc27254b8f15e959c4e2f0b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3897382657797649505}
   m_SourcePrefab: {fileID: 100100000, guid: 3ca7a78f0fc27254b8f15e959c4e2f0b, type: 3}
 --- !u!4 &3635320526491007979 stripped
 Transform:
@@ -111,7 +114,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-  soundContainer: {fileID: 11400000, guid: d2cded7bc32b0ab4799374527368117e, type: 2}
 --- !u!65 &5992102473738119458
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -119,7 +121,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4123204263270605137}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 149ea386024a71543841fcba36e4c3cb, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -160,6 +162,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
+--- !u!114 &3897382657797649505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4123204263270605137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c23fb49a42102784d9c373ad9c7f8eb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioContainer: {fileID: 11400000, guid: d2cded7bc32b0ab4799374527368117e, type: 2}
 --- !u!1001 &6729152916694348380
 PrefabInstance:
   m_ObjectHideFlags: 0
