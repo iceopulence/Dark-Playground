@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UIElements;
 
 [RequireComponent(typeof(Rigidbody))]
-public class DropItemOnDeath : MonoBehaviour, IInteractable
+public class DropItemBehaviour : MonoBehaviour, IInteractable
 {
     [SerializeField] Collider col;
     
@@ -34,6 +34,7 @@ public class DropItemOnDeath : MonoBehaviour, IInteractable
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        rb.constraints = RigidbodyConstraints.None;
         ApplyRandomForce();
     }
 
@@ -57,7 +58,7 @@ public class DropItemOnDeath : MonoBehaviour, IInteractable
         AddDropToInventory();
     }
 
-    void OnCollisionEnter(Collision other)
+    void OnCollisionStay(Collision other)
     {
         if(rb.isKinematic != true && rb.linearVelocity.y < 0)
         {

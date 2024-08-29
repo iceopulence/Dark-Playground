@@ -8,11 +8,11 @@ public class Health : MonoBehaviour
 
     public UnityEvent onDeath;
 
-    private SoundContainer soundContainer;
+    private AudioContainer audioContainer;
 
     void Awake()
     {
-        soundContainer = GetComponent<SFX>().soundContainer;
+        audioContainer = GetComponent<SFX>().audioContainer;
     }
 
     void Start()
@@ -29,9 +29,9 @@ public class Health : MonoBehaviour
 
         print("damaged " + currentHealth);
 
-        if (soundContainer != null && soundContainer.hitSounds.Length > 0)
+        if (audioContainer != null && audioContainer.hitSounds.Length > 0)
         {
-            AudioSource.PlayClipAtPoint(soundContainer.hitSounds[Random.Range(0, hitSoundsLength)], transform.position);
+            AudioSource.PlayClipAtPoint(audioContainer.hitSounds[Random.Range(0, audioContainer.hitSounds.Length)], transform.position);
         }
 
         // Check if health has dropped to zero or below.
@@ -54,9 +54,9 @@ public class Health : MonoBehaviour
         Debug.Log(gameObject.name + " has died.");
 
         // Instantiate(droppedItem, transform.position, transform.rotation); 
-        if(soundContainer != null && soundContainer.deathSound != null)
+        if(audioContainer != null && audioContainer.deathSound != null)
         {
-            AudioSource.PlayClipAtPoint(soundContainer.deathSound, transform.position);
+            AudioSource.PlayClipAtPoint(audioContainer.deathSound, transform.position);
         }
 
         onDeath.Invoke();

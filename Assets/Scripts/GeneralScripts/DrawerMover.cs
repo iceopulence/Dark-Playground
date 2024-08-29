@@ -1,8 +1,10 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class DrawerMover : MonoBehaviour, IInteractable
 {
-    [SerializeField] private float moveDistance = 2.5f;
+    [SerializeField] private float moveDistance = 1f;
     [SerializeField] private float moveDuration = 1.0f;
     [SerializeField] private AudioClip openSound;
     [SerializeField] private AudioClip closeSound;
@@ -13,11 +15,54 @@ public class DrawerMover : MonoBehaviour, IInteractable
     private bool isOpen = false;
     private float startTime;
 
+    List<GameObject> itemsInDrawer;
+
     void Awake()
     {
         startPosition = transform.position;
         targetPosition = startPosition + -transform.up * moveDistance;
+
+        if (transform.childCount > 0)
+        {
+            InitDrawerItems();
+        }
+
+
     }
+
+    void InitDrawerItems()
+    {
+        itemsInDrawer = new List<GameObject>();
+        foreach (Transform child in transform)
+        {
+            if (child != this.transform)
+            {
+                itemsInDrawer.Add(child.gameObject);
+              child.gameObject.SetActive(false);
+              
+
+              DropItemBehaviour drop = child.GetComponent<DropItemBehaviour>();
+                if(drop == null)
+                {
+                    child.gameObject.AddComponent<DropItemBehaviour>();
+                }
+
+            }
+        }
+
+    }
+        void ReleaseDrawerItems()
+        {
+            transform.DetachChildren();
+
+            foreach( GameObject item in itemsInDrawer)
+            {
+                 item.SetActive(true);
+
+            }
+                itemsInDrawer = null;
+        }
+
 
     void FixedUpdate()
     {
@@ -30,6 +75,10 @@ public class DrawerMover : MonoBehaviour, IInteractable
             {
                 isMoving = false;
                 isOpen = !isOpen;
+                if( isOpen && itemsInDrawer.Count > 0)
+                {
+                    ReleaseDrawerItems();
+                }
             }
         }
     }
