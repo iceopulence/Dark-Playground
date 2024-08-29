@@ -20,7 +20,7 @@ public class DoorEditor : Editor
     private void GenerateKeyForDoor(Door door)
     {
         // Define the offset in local coordinates (e.g., right in front of the door)
-        Vector3 offset = new Vector3(0f, 0f, 1f); // Change this as needed
+        Vector3 offset = new Vector3(0f, 0f, 4f); // Change this as needed
 
         // Correct way to list prefab names within the Resources/Keys folder
         Object[] loadedKeyPrefabs = Resources.LoadAll("Keys", typeof(GameObject));

@@ -19,11 +19,11 @@ public class AudioEnvelopeSpeaking : MonoBehaviour
 
         if(testing)
         {
-            AnalyzeAudioClip(testAudio);
+            PlayAudio(testAudio);
         }
     }
 
-    public void AnalyzeAudioClip(AudioClip clip)
+    public void PlayAudio(AudioClip clip)
     {
         if (targetTransform == null)
         {
@@ -63,7 +63,7 @@ public class AudioEnvelopeSpeaking : MonoBehaviour
         }
 
         audioSource.Stop();
-        AnalyzeAudioClip(clip);
+        PlayAudio(clip);
     }
 
     float GetCurrentAverageVolume(float[] data)
