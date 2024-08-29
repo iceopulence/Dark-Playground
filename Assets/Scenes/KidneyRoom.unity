@@ -842,6 +842,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: kidney room
       objectReference: {fileID: 0}
+    - target: {fileID: 3004559864356136672, guid: 5237446d1de04724c8363d7b9d4a3b8d, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: e1c7abbea4a04f644a2f844f5e85536d, type: 2}
     - target: {fileID: 4321514657177891973, guid: 5237446d1de04724c8363d7b9d4a3b8d, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
