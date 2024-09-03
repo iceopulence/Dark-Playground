@@ -517,6 +517,63 @@ MonoBehaviour:
   positionThreshold: 0.5
   rotationThreshold: 15
   isAnimating: 0
+--- !u!1001 &41541136
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 87a6f3d61009e9447bda60f1d2a68515, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -54.884
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 87a6f3d61009e9447bda60f1d2a68515, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.03423643
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 87a6f3d61009e9447bda60f1d2a68515, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 68.94877
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 87a6f3d61009e9447bda60f1d2a68515, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.64598334
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 87a6f3d61009e9447bda60f1d2a68515, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.64598334
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 87a6f3d61009e9447bda60f1d2a68515, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.28758574
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 87a6f3d61009e9447bda60f1d2a68515, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.2875857
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 87a6f3d61009e9447bda60f1d2a68515, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 87a6f3d61009e9447bda60f1d2a68515, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 87a6f3d61009e9447bda60f1d2a68515, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 47.996
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 87a6f3d61009e9447bda60f1d2a68515, type: 3}
+      propertyPath: m_Name
+      value: JamesPaperWeight
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 87a6f3d61009e9447bda60f1d2a68515, type: 3}
 --- !u!1001 &42296380
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23241,3 +23298,4 @@ SceneRoots:
   - {fileID: 994921098}
   - {fileID: 1095152072}
   - {fileID: 613841116}
+  - {fileID: 41541136}
