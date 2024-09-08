@@ -34,7 +34,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.cinemachine": {
-      "version": "file:C:/Users/aerop/Downloads/com.unity.cinemachine@2.10.0/com.unity.cinemachine@2.10.0",
+      "version": "file:C:/Users/Jason/Downloads/com.unity.cinemachine@2.10.0/com.unity.cinemachine@2.10.0",
       "depth": 0,
       "source": "local",
       "dependencies": {
@@ -49,7 +49,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.collections": {
-      "version": "2.4.1",
+      "version": "2.4.3",
       "depth": 2,
       "source": "registry",
       "dependencies": {
